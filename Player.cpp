@@ -5,37 +5,37 @@
 #include "Player.h"
 
 Player::Player (std::string name, int score){
-  m_playerName = name;
-  m_score = score;
+  aPlayerName = name;
+  aScore = score;
 }
 
 std::string Player::getPlayerName(){
-  return m_playerName;
+  return aPlayerName;
 }
 
 int Player::getScore(){
-  return m_score;
+  return aScore;
 }
 
 void Player::setPlayerName(std::string name){
-  m_playerName = name;
+  aPlayerName = name;
 }
 
 void Player::setScore(int score){
-  m_score = score;
+  aScore = score;
 }
 
 void Player::retrieveCardFfromDrawPile(Card* playerCard) {
-  m_drawpile.push_back(playerCard);
+  aDrawPile.push_back(playerCard);
 }
 
 void Player::addCardFromDrawPile(Card* playerCard) {
-  m_playerHand.push_back(playerCard);
+  aPlayerHand.push_back(playerCard);
 }
 
 std::string Player::displayHand() {
-  for (int i = 0; i < m_playerHand.size(); i++){
-    std::cout << m_playerHand.at(i) -> getValue() << " " << m_playerHand.at(i) -> getColor()
+  for (int i = 0; i < aPlayerHand.size(); i++){
+    std::cout << aPlayerHand.at(i) -> getValue() << " " << aPlayerHand.at(i) -> getColor()
     << std::endl;
   }
 

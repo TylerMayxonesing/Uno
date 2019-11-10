@@ -3,6 +3,7 @@
 //
 
 #include "Game.h"
+#include <random>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -10,7 +11,9 @@
 #include "Card.h"
 #include <algorithm>
 #include "Deck.h"
-//std::vector<Card*> cards;
+#include <chrono>
+
+//Reads through the file and store the cards into a deck
 void readFile() {
   Deck* deck;
   std::vector<Deck*> playingDeck;
@@ -34,8 +37,11 @@ void readFile() {
     //cards.push_back(card);
     playingDeck.push_back(deck);
   }
-  for (int i = 0; i < playingDeck.size(); i++){
-    std::cout << playingDeck.at(i) -> getCards()-> getColor() << " "  << playingDeck.at(i)->getCards()->getValue() <<  std::endl;
-  }
+  std::minstd_rand generator(std::chrono::system_clock::now().time_since_epoch().count());
+  std::shuffle(playingDeck.begin(), playingDeck.end(), generator);
 
+  //Prints out all the cards in the file
+  for (int i = 0; i < playingDeck.size(); i++){
+    std::cout << playingDeck.at(i) -> getNumCards() << " " << playingDeck.at(i) -> getCards()-> getColor() << " "  << playingDeck.at(i)->getCards()->getValue() <<  std::endl;
+  }
 }

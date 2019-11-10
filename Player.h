@@ -10,9 +10,9 @@
 class Player{
 
  private:
-  std::string m_playerName;
-  std::vector<Card* > m_drawpile;
-  int m_score;
+  std::string aPlayerName;
+  std::vector<Card* > aDrawPile;
+  int aScore;
   void discard(Card* playerCard);
 
  public:
@@ -27,6 +27,6 @@ class Player{
   void addCardFromDrawPile(Card* playerCard);
   void retrieveCardFfromDrawPile(Card* playerCard);
   void play();
-  std::vector <Card*> m_playerHand;
+  std::vector <Card*> aPlayerHand;
 };
 #endif //UNO__PLAYER_H_
