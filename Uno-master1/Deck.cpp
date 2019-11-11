@@ -9,16 +9,6 @@ Deck::Deck(int numCards, Card* cards) {
   aCards = cards;
 }
 
-void Deck::setDeck(){
-  std::vector<Card*> playingDeck;
-  for (int i = 1; i <= aNumCards; i++) {
-    playingDeck.push_back(aCards);
-  }
-  aPlayingDeck = playingDeck;
-}
-std::vector<Card*> Deck::getDeck() {
-  return aPlayingDeck;
-}
 int Deck::getNumCards() {
   return aNumCards;
 }
