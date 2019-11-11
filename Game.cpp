@@ -21,7 +21,7 @@ void readFile() {
   int numCards;
   int value;
   std::string color;
-  std::ifstream file("C:/Users/Tyler Mayxonesing/Desktop/Midterm 2_ Uno Starter Code/Configs/Decks/Regular.txt");
+  std::ifstream file("/Users/rayngan/desktop/Midterm2/Configs/Decks/Regular.txt");
     std::string line;
   while (getline(file, line)) {
     file >> std::ws;

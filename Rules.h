@@ -3,6 +3,10 @@
 //
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <sstream>
+#include <vector>
+
 #ifndef UNO_RULES_H
 #define UNO_RULES_H
 
@@ -18,6 +22,9 @@ public:
     enum level { must_play , reneging};
     static int mustPlayCardEachTurn();
     int renegingfunc();
+
+    static void readfile(int starting_hand,int uno_penalty,int bad_uno_penalty,int max_draw, char must_play, char reneging);
+
 
 };
 

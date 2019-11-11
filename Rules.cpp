@@ -4,6 +4,11 @@
 
 #include "Rules.h"
 
+
+
+
+
+
 int Rules::startingHandSize(int starting_hand) {
     while (true) {
         std::cout << "StartingHandSize : ";
@@ -61,11 +66,11 @@ int Rules::mustPlayCardEachTurn() {
     enum level must_play;
     std::cin>>input;
     if (input == 't'){
-        must_play = static_cast<level>('True');
+        must_play = static_cast<level>('T');
 //        std::cout<<"it is true";
     }
     else if (input =='f') {
-      must_play = static_cast<level>('False');
+      must_play = static_cast<level>('F');
 //        std::cout<<"it is false";
     }
 
@@ -79,14 +84,49 @@ int Rules::renegingfunc() {
     //std::cin>>reneging;
     enum level reneging;
     if (input == 'a'){
-        reneging = static_cast<level>('Any');
+        reneging = static_cast<level>('A');
     }
     if (input == 'l'){
-        reneging = static_cast<level>('LastDrawn');
+        reneging = static_cast<level>('L');
     }
     return 0;
 }
 
+void Rules::readfile(int starting_hand,int uno_penalty,int bad_uno_penalty,int max_draw, char must_play, char reneging) {
+    std::ifstream file("/Users/rayngan/desktop/Midterm2/Configs/rules/Default.txt");
+    std::string  line;
+    std::string items;
+    char space;
+    char num;
+    while (getline(file, line)) {
+        file >> std::ws;
+        std::stringstream ss;
+        ss << line;
+        ss >> items;
+        ss >> space;
+        ss >> num;
+        std::istringstream buf(line);
+
+        std::istream_iterator<std::string> beg(buf), end;
+
+        std::vector<std::string> tokens(beg, end); // done!
+
+        for(auto& s: tokens)
+            if (s == "StartingHandSize"){starting_hand = num;}
+
+        for(auto& s: tokens)
+            if (s == "UnoCalloutPenalty"){uno_penalty = num;}
+        for(auto& s: tokens)
+            if (s == "BadUnoCalloutPenalty"){bad_uno_penalty = num;}
+        for(auto& s: tokens)
+            if (s == "DrawLimit"){max_draw = num;}
+        for(auto& s: tokens)
+            if (s == "MustPlayCardEachTurn"){must_play = num;}
+        for(auto& s: tokens)
+            if (s == "Reneging"){reneging = num;}
 
 
+    }
 
+
+}
