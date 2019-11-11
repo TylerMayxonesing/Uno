@@ -71,6 +71,7 @@ void Rules::readfile(int starting_hand,int uno_penalty,int bad_uno_penalty,int m
         ss >> items;
         ss >> space;
         ss >> num;
+
         std::istringstream buf(line);
 
         std::istream_iterator<std::string> beg(buf), end;
@@ -78,19 +79,20 @@ void Rules::readfile(int starting_hand,int uno_penalty,int bad_uno_penalty,int m
         std::vector<std::string> tokens(beg, end); // done!
 
         for(auto& s: tokens)
-            if (s == "StartingHandSize"){starting_hand = num;}
+            if (s == "StartingHandSize"){starting_hand = num-48;}
         for(auto& s: tokens)
-            if (s == "UnoCalloutPenalty"){uno_penalty = num;}
+            if (s == "UnoCalloutPenalty"){uno_penalty = num-48;}
         for(auto& s: tokens)
-            if (s == "BadUnoCalloutPenalty"){bad_uno_penalty = num;}
+            if (s == "BadUnoCalloutPenalty"){bad_uno_penalty = num-48;}
         for(auto& s: tokens)
-            if (s == "DrawLimit"){max_draw = num;}
+            if (s == "DrawLimit"){if (num == 78) {max_draw = 0;}else{max_draw = num-48;}}
+//            else{max_draw = num;}
+
         for(auto& s: tokens)
             if (s == "MustPlayCardEachTurn"){must_play = num;}
         for(auto& s: tokens)
             if (s == "Reneging"){reneging = num;}
     }
-
     Rules::startingHandSize(0);
     Rules::unoCallOutPenalty(0);
     Rules::badUnoCalloutPenalty(0);
