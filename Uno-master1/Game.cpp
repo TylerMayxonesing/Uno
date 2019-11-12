@@ -46,8 +46,8 @@ void readFile() {
       playingDeck.push_back(numAndTypeStorage.at(i)->getCards());
     }
   }
-  std::minstd_rand generator(std::chrono::system_clock::now().time_since_epoch().count());
-  std::shuffle(playingDeck.begin(), playingDeck.end(), generator);
+//  std::minstd_rand generator(std::chrono::system_clock::now().time_since_epoch().count());
+//  std::shuffle(playingDeck.begin(), playingDeck.end(), generator);
 
   //Prints out all the cards in the file
   for (int i = 0; i < playingDeck.size(); i++) {
@@ -87,17 +87,22 @@ void readFile() {
 
 
 
-  for (int k = 0; k < players.size(); k++){
+//  for (int k = 0; k < players.size(); k++){}
+
     for (int i = 0; i < 7; i++) {
       hand = new Hand(playingDeck.at(i));
       playerHand.push_back(hand);
+//      playingDeck.erase(playingDeck.begin()+6);
     }
-  }
+    //playingDeck.erase(playingDeck.begin(), playingDeck.begin()+(playingDeck.size()-1));
+
+
+
   for (int i = 0; i < players.size(); i++) {
     std::cout << players.at(i)->getPlayerName()<< " ";
     for (int n = 0; n < playerHand.size(); n++) {
-      std::cout << playerHand.at(n)->getCardsInHand()->getValue()
-                << " " << playerHand.at(n)->getCardsInHand()->getColor() << ",";
+      std::cout << playerHand.at(n)->getCardsInHand()->getColor()<< " " << playerHand.at(n)->getCardsInHand()->getValue()
+                 << ", ";
     }
     std::cout<< "\n";
   }
