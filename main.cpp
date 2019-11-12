@@ -1,6 +1,7 @@
 #include <iostream>
-#include "Rules.h"
+#include "Game.h"
 int main() {
-    Rules::readfile(0,0,0,0,0,0);
-  return 0;
+    //readFile();
+    hand();
+    return 0;
 }

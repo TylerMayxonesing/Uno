@@ -1,42 +1,31 @@
-//
-// Created by T Alpha 1 on 11/2/2019.
-//
-
 #include "Player.h"
 
-Player::Player (std::string name, int score){
-  aPlayerName = name;
-  aScore = score;
+Player::Player (std::string playerName, int score, Hand* hands){
+    aPlayerName = playerName;
+    aScore = score;
+    aHands = hands;
 }
 
 std::string Player::getPlayerName(){
-  return aPlayerName;
+    return aPlayerName;
 }
 
 int Player::getScore(){
-  return aScore;
+    return aScore;
 }
 
-void Player::setPlayerName(std::string name){
-  aPlayerName = name;
+Hand* Player::getHands() {
+    return aHands;
+}
+
+void Player::setPlayerName(std::string playerName){
+    aPlayerName = playerName;
 }
 
 void Player::setScore(int score){
-  aScore = score;
+    aScore = score;
 }
 
-void Player::retrieveCardFfromDrawPile(Card* playerCard) {
-  aDrawPile.push_back(playerCard);
-}
-
-void Player::addCardFromDrawPile(Card* playerCard) {
-  aPlayerHand.push_back(playerCard);
-}
-
-std::string Player::displayHand() {
-  for (int i = 0; i < aPlayerHand.size(); i++){
-    std::cout << aPlayerHand.at(i) -> getValue() << " " << aPlayerHand.at(i) -> getColor()
-    << std::endl;
-  }
-
+void Player::setPlayerHand(Hand* hands) {
+    aHands = hands;
 }

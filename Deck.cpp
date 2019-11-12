@@ -1,26 +1,20 @@
-//
-// Created by T Alpha 1 on 11/2/2019.
-//
-
 #include "Deck.h"
 
-Deck::Deck(int numCards, Card* cards) {
-  aNumCards = numCards;
-  aCards = cards;
+Deck::Deck(int numCards, std::vector<Card*> deck) {
+    aNumCards = numCards;
+    aDeck = deck;
 }
 
 int Deck::getNumCards() {
-  return aNumCards;
+    return aNumCards;
 }
 
-Card* Deck::getCards(){
-  return aCards;
+std::vector<Card*> Deck::getDeck() {
+    return aDeck;
 }
-
+void Deck::setDeck(std::vector<Card*> deck) {
+    aDeck = deck;
+}
 void Deck::setNumCards(int numCards) {
-  aNumCards = numCards;
-}
-
-void Deck::setCards(Card* cards) {
-  aCards = cards;
+    aNumCards = numCards;
 }
