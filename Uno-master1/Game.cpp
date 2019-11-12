@@ -31,7 +31,7 @@ std::vector<Card*> readFile() {
     std::stringstream ss;
     ss << line;
     card = nullptr;
-    deck = nullptr;
+    //deck = nullptr;
     ss >> numCards;
     ss >> color;
     ss >> value;
@@ -41,8 +41,6 @@ std::vector<Card*> readFile() {
       deck = new Deck(numCards, cards);
     }
   }
-//  std::minstd_rand generator(std::chrono::system_clock::now().time_since_epoch().count());
-//  std::shuffle(deck->getDeck().begin(), deck->getDeck().end(), generator);
 
 //  for (int i = 0; i < deck->getDeck().size(); i++) {
 //    std::cout << deck->getDeck().at(i)->getColor() << " "
@@ -60,8 +58,8 @@ std::vector<Card*> readFile() {
 
 void hand(){
   std::vector<Card*> deck = readFile();
-
-
+  std::minstd_rand generator(std::chrono::system_clock::now().time_since_epoch().count());
+  std::shuffle(deck.begin(), deck.end(), generator);
   Hand* hand;
   hand = nullptr;
   std::vector<Card*> playerHands;
@@ -69,8 +67,8 @@ void hand(){
   Player* player;
   int numPlayers;
   std::string playerName;
-  /////////////////////////////////////////////////////////////////////////////
-  std::cout << "Enter the number of players you want: " << std::endl;
+
+  std::cout << "Enter the number of players you want: ";
   std::cin >> numPlayers;
   for (int i = 0; i < numPlayers; i++) {
     std::cout << "Player " << i + 1 << " enter your name: ";
@@ -78,19 +76,28 @@ void hand(){
     player = new Player(playerName, 0, hand);
     players.push_back(player);
   }
-  hand = new Hand(deck);
+
+  for (int i = 0; i < players.size(); i++) {
+    for (int j = 0; j < 7; j++) {
+      playerHands.push_back(deck.at(j));
+    }
+    deck.erase(deck.begin(), deck.begin()+7);
+    hand = new Hand(playerHands);
+    playerHands.erase(playerHands.begin(), playerHands.begin()+7);
+//    std::cout << hand->getPlayerHand().at(0)->getColor() << " "
+//        << hand->getPlayerHand().at(0)->getValue() << ", " << std::endl;
 
 
-  for(int i = 0; i < players.size(); i++) {
+
     players.at(i)->setPlayerHand(hand);
   }
+
   for(int i = 0; i < players.size(); i++){
-    std::cout << players.at(i)->getPlayerName();
+    std::cout << players.at(i)->getPlayerName() << ": ";
     for(int j = 0; j < players.at(i)->getHands()->getPlayerHand().size(); j++) {
       std::cout << players.at(i)->getHands()->getPlayerHand().at(j)->getColor()
-      << " " << players.at(i)->getHands()->getPlayerHand().at(j)->getValue() << std::endl;
+      << " " << players.at(i)->getHands()->getPlayerHand().at(j)->getValue() << ", ";
     }
+    std::cout << "\n";
   }
-
-
 }
