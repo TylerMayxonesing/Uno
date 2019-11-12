@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Game.h"
 int main() {
-  readFile();
-  //play();
+  //readFile();
+  hand();
   return 0;
 }

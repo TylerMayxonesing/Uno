@@ -5,28 +5,26 @@
 #ifndef UNO__PLAYER_H_
 #define UNO__PLAYER_H_
 
-#include "Card.h"
+#include "Hand.h"
 
 class Player{
 
  private:
   std::string aPlayerName;
-  std::vector<Card*> aDrawPile;
   int aScore;
-  void discard(Card* playerCard);
-
+  Hand* aHands;
  public:
-  Player(std::string name, int score);
+  Player(std::string playerName, int score, Hand* hands);
   ~Player();
+
   std::string getPlayerName();
   int getScore();
+  Hand* getHands();
 
-  void setPlayerName(std::string name);
+
+  void setPlayerName(std::string playerName);
   void setScore(int score);
-  std::string displayHand();
-  void addCardFromDrawPile(Card* playerCard);
-  std::vector <Card*> aPlayerHand;
+  void setPlayerHand(Hand* hands);
 
-  Card* getMove(Card*);
 };
 #endif //UNO__PLAYER_H_

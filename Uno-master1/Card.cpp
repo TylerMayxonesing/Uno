@@ -25,11 +25,3 @@ void Card::setColor(std::string color){
   aColor = color;
 }
 
-//bool Card::canPlay(Card card1, Card card2) {
-//  if (card1.aValue == card2.aValue || card1.aColor == card2.aColor){
-//    return true;
-//  }
-//  else{
-//    return false;
-//  }
-//}

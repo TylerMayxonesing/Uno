@@ -17,7 +17,7 @@ class Deck{
   std::vector<Card*> getDeck();
 
   void setNumCards(int numCards);
-  void setDeck(std::vector<Card*> Deck);
+  void setDeck(std::vector<Card*> deck);
 
 
 

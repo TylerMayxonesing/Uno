@@ -18,8 +18,8 @@
 //Reads through the file and store the cards into a deck
 std::vector<Card*> readFile() {
   Deck* deck;
-  std::vector<Card*> cards;
   Card* card;
+  std::vector<Card*> cards;
 
   int numCards;
   int value;
@@ -36,8 +36,8 @@ std::vector<Card*> readFile() {
     ss >> color;
     ss >> value;
     for (int i = 1; i <= numCards; i++) {
-    card = new Card(value, color);
-    cards.push_back(card);
+      card = new Card(value, color);
+      cards.push_back(card);
       deck = new Deck(numCards, cards);
     }
   }
@@ -58,56 +58,39 @@ std::vector<Card*> readFile() {
 
 
 
-//void hand(){
-//  auto x = readFile();
-//  for (int i = 0; i < x.size(); i++){
-//    std::cout << x.at(i)->getColor() << " " << x.at(i)->getValue() << std::endl;
-//  }
-//  std::vector <Hand*> playerHands;
-//  Hand* hand;
-//  std::vector <Card*> playerHand;
-//
-//  std::vector<Player*> players;
-//  Player* player;
-//  int numPlayers;
-//  std::string playerName;
-//  std::cout << "Enter the number of players you want: " << std::endl;
-//  std::cin >> numPlayers;
-//  for (int i = 0; i < numPlayers; i++) {
-//    std::cout << "Player " << i + 1 << " enter your name: ";
-//    std::cin >> playerName;
-//    player = new Player(playerName, 0);
-//    players.push_back(player);
-//  }
-//
-//
-//
-//
-//
-//
-//
-//
-//    for (int i = 0; i < 21; i++) {
-//      hand = new Hand(playingDeck.at(i));
-//      playerHands.push_back(hand);
-//    }
-//
-//  for (int i = 0; i < playerHands.size(); i++){
-//    for (int j = 0; j <7 ; j++){
-//      playerHand.push_back(playerHands.at(i)->getCardsInHand());
-//    }
-//    playerHands.erase(playerHands.begin(), playerHands.begin()+6);
-//  }
-//
-//
-//
-//
-//  for (int i = 0; i < players.size(); i++) {
-//    std::cout << players.at(i)->getPlayerName()<< ": ";
-//    for (int n = 0; n < playerHand.size(); n++) {
-//      std::cout << playerHand.at(n)->getColor()<< " " << playerHand.at(n)->getValue()
-//                 << ", ";
-//    }
-//    std::cout<< "\n";
-//  }
-//}
+void hand(){
+  std::vector<Card*> deck = readFile();
+
+
+  Hand* hand;
+  hand = nullptr;
+  std::vector<Card*> playerHands;
+  std::vector<Player*> players;
+  Player* player;
+  int numPlayers;
+  std::string playerName;
+  /////////////////////////////////////////////////////////////////////////////
+  std::cout << "Enter the number of players you want: " << std::endl;
+  std::cin >> numPlayers;
+  for (int i = 0; i < numPlayers; i++) {
+    std::cout << "Player " << i + 1 << " enter your name: ";
+    std::cin >> playerName;
+    player = new Player(playerName, 0, hand);
+    players.push_back(player);
+  }
+  hand = new Hand(deck);
+
+
+  for(int i = 0; i < players.size(); i++) {
+    players.at(i)->setPlayerHand(hand);
+  }
+  for(int i = 0; i < players.size(); i++){
+    std::cout << players.at(i)->getPlayerName();
+    for(int j = 0; j < players.at(i)->getHands()->getPlayerHand().size(); j++) {
+      std::cout << players.at(i)->getHands()->getPlayerHand().at(j)->getColor()
+      << " " << players.at(i)->getHands()->getPlayerHand().at(j)->getValue() << std::endl;
+    }
+  }
+
+
+}

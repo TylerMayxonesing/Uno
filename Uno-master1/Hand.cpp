@@ -4,18 +4,14 @@
 
 #include "Hand.h"
 
-Hand::Hand(Card* cardsInHand) {
-  aCardsInHand = cardsInHand;
-}
-void Hand::setPlayerHand() {
-  std::vector <Card*> playerHand;
-  playerHand.push_back(aCardsInHand);
-  aPlayerHand = playerHand;
+Hand::Hand(std::vector <Card*> playerHand) {
+   aPlayerHand = playerHand;
 }
 
-std::vector<Card*> Hand::getPlayerHand(){
+std::vector <Card*> Hand::getPlayerHand() {
   return aPlayerHand;
 }
-Card* Hand::getCardsInHand() {
-  return aCardsInHand;
+
+void Hand::setPlayerHand(std::vector<Card*> playerHand) {
+  aPlayerHand = playerHand;
 }

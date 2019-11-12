@@ -4,9 +4,10 @@
 
 #include "Player.h"
 
-Player::Player (std::string name, int score){
-  aPlayerName = name;
+Player::Player (std::string playerName, int score, Hand* hands){
+  aPlayerName = playerName;
   aScore = score;
+  aHands = hands;
 }
 
 std::string Player::getPlayerName(){
@@ -17,23 +18,18 @@ int Player::getScore(){
   return aScore;
 }
 
-void Player::setPlayerName(std::string name){
-  aPlayerName = name;
+Hand* Player::getHands() {
+  return aHands;
+}
+
+void Player::setPlayerName(std::string playerName){
+  aPlayerName = playerName;
 }
 
 void Player::setScore(int score){
   aScore = score;
 }
 
-
-void Player::addCardFromDrawPile(Card* playerCard) {
-  aPlayerHand.push_back(playerCard);
-}
-
-std::string Player::displayHand() {
-  for (int i = 0; i < aPlayerHand.size(); i++){
-    std::cout << aPlayerHand.at(i) -> getValue() << " " << aPlayerHand.at(i) -> getColor()
-    << std::endl;
-  }
-
+void Player::setPlayerHand(Hand* hands) {
+  aHands = hands;
 }

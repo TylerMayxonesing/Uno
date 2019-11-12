@@ -16,10 +16,9 @@ int Deck::getNumCards() {
 std::vector<Card*> Deck::getDeck() {
   return aDeck;
 }
-void Deck::setDeck(std::vector<Card*> Deck) {
-  aDeck = Deck;
+void Deck::setDeck(std::vector<Card*> deck) {
+  aDeck = deck;
 }
-//////////////////////////////////////////////////////////////////////////////
 void Deck::setNumCards(int numCards) {
   aNumCards = numCards;
 }
