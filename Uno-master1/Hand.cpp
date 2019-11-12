@@ -6,9 +6,16 @@
 
 Hand::Hand(Card* cardsInHand) {
   aCardsInHand = cardsInHand;
-
+}
+void Hand::setPlayerHand() {
+  std::vector <Card*> playerHand;
+  playerHand.push_back(aCardsInHand);
+  aPlayerHand = playerHand;
 }
 
+std::vector<Card*> Hand::getPlayerHand(){
+  return aPlayerHand;
+}
 Card* Hand::getCardsInHand() {
   return aCardsInHand;
 }

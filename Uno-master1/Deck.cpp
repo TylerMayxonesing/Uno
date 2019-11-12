@@ -4,23 +4,23 @@
 
 #include "Deck.h"
 
-Deck::Deck(int numCards, Card* cards) {
+Deck::Deck(int numCards, std::vector<Card*> deck) {
   aNumCards = numCards;
-  aCards = cards;
+  aDeck = deck;
 }
 
 int Deck::getNumCards() {
   return aNumCards;
 }
 
-Card* Deck::getCards(){
-  return aCards;
+std::vector<Card*> Deck::getDeck() {
+  return aDeck;
 }
-
+void Deck::setDeck(std::vector<Card*> Deck) {
+  aDeck = Deck;
+}
+//////////////////////////////////////////////////////////////////////////////
 void Deck::setNumCards(int numCards) {
   aNumCards = numCards;
 }
 
-void Deck::setCards(Card* cards) {
-  aCards = cards;
-}

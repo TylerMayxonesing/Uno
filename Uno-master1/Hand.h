@@ -8,11 +8,15 @@
 #include "Card.h"
 
 class Hand{
+  std::vector <Card*> aPlayerHand;
  public:
   Card* aCardsInHand;
   Hand(Card*);
   ~Hand();
   Card* getCardsInHand();
+
+  void setPlayerHand();
+  std::vector<Card*> getPlayerHand();
 };
 
 #endif //UNO__HAND_H_
