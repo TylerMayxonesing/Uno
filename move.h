@@ -1,8 +1,29 @@
 //
-// Created by T Alpha 1 on 11/2/2019.
+// Created by Ray Ngan on 11/4/19.
 //
+#include <iostream>
+#include<vector>
+#include <string>
 
-#ifndef UNO__MOVE_H_
-#define UNO__MOVE_H_
 
-#endif //UNO__MOVE_H_
+#ifndef UNO_MOVE_H
+#define UNO_MOVE_H
+
+
+class move {
+public:
+
+    void draw();
+    void play();
+    void skip();
+    void quit();
+    void uno();
+    void help();
+
+
+private:
+
+};
+
+
+#endif //UNO_MOVE_H

@@ -78,13 +78,11 @@ void hand(){
             playerHands.push_back(deck.at(j));
         }
         deck.erase(deck.begin(), deck.begin()+7);
-        hand = new Hand(playerHands);
+
         playerHands.erase(playerHands.begin(), playerHands.begin()+7);
 //    std::cout << hand->getPlayerHand().at(0)->getColor() << " "
 //        << hand->getPlayerHand().at(0)->getValue() << ", " << std::endl;
-
-
-
+        hand = new Hand(playerHands);
         players.at(i)->setPlayerHand(hand);
     }
 

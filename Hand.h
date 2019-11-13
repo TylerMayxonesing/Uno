@@ -9,7 +9,6 @@ private:
 public:
     Hand(std::vector<Card*> playerHand);
     ~Hand();
-
     std::vector<Card*> getPlayerHand();
     void setPlayerHand(std::vector<Card*> playerHand);
 };
