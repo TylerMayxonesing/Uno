@@ -84,20 +84,24 @@ void hand(){
     deck.erase(deck.begin(), deck.begin()+7);
     hand = new Hand(playerHands);
     playerHands.erase(playerHands.begin(), playerHands.begin()+7);
-//    std::cout << hand->getPlayerHand().at(0)->getColor() << " "
-//        << hand->getPlayerHand().at(0)->getValue() << ", " << std::endl;
-
-
-
     players.at(i)->setPlayerHand(hand);
   }
+//Prints out all players Hands
+//  for(int i = 0; i < players.size(); i++){
+//    std::cout << players.at(i)->getPlayerName() << ": ";
+//    for(int j = 0; j < players.at(i)->getHands()->getPlayerHand().size(); j++) {
+//      std::cout << players.at(i)->getHands()->getPlayerHand().at(j)->getColor()
+//      << " " << players.at(i)->getHands()->getPlayerHand().at(j)->getValue() << ", ";
+//    }
+//    std::cout << "\n";
+//  }
+std::string playerMove;
 
-  for(int i = 0; i < players.size(); i++){
-    std::cout << players.at(i)->getPlayerName() << ": ";
-    for(int j = 0; j < players.at(i)->getHands()->getPlayerHand().size(); j++) {
-      std::cout << players.at(i)->getHands()->getPlayerHand().at(j)->getColor()
-      << " " << players.at(i)->getHands()->getPlayerHand().at(j)->getValue() << ", ";
-    }
-    std::cout << "\n";
+for (int i = 0; i < players.size(); i++){
+  std::cout << players.at(i)->getPlayerName() << ": What is your move? ";
+  std::cin >> playerMove;
+  if (players.at(i)->getHands()->getPlayerHand().){
   }
+}
+
 }
