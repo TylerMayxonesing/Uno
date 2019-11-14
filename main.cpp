@@ -2,6 +2,8 @@
 #include "Game.h"
 int main() {
     //readFile();
-    hand();
+//    startingSetUp();
+    std::string pre = prefix("purple");
+    std::cout<<pre;
     return 0;
 }

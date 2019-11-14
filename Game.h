@@ -5,7 +5,10 @@
 #include "Deck.h"
 #include "Player.h"
 #include "Hand.h"
+#include "prefix.h"
+#include "InputValidation.h"
+
 
 std::vector<Card*> readFile();
-void hand();
+void startingSetUp();
 #endif //UNO__GAME_H_

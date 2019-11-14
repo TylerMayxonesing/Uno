@@ -10,6 +10,7 @@
 #include <chrono>
 #include "Player.h"
 #include "Hand.h"
+#include "prefix.h"
 
 //Reads through the file and store the cards into a deck
 std::vector<Card*> readFile() {
@@ -52,7 +53,7 @@ std::vector<Card*> readFile() {
 
 
 
-void hand(){
+void startingSetUp(){
     std::vector<Card*> deck = readFile();
     std::minstd_rand generator(std::chrono::system_clock::now().time_since_epoch().count());
     std::shuffle(deck.begin(), deck.end(), generator);
@@ -78,11 +79,11 @@ void hand(){
             playerHands.push_back(deck.at(j));
         }
         deck.erase(deck.begin(), deck.begin()+7);
-
+        hand = new Hand(playerHands);
         playerHands.erase(playerHands.begin(), playerHands.begin()+7);
 //    std::cout << hand->getPlayerHand().at(0)->getColor() << " "
 //        << hand->getPlayerHand().at(0)->getValue() << ", " << std::endl;
-        hand = new Hand(playerHands);
+
         players.at(i)->setPlayerHand(hand);
     }
 
@@ -95,3 +96,4 @@ void hand(){
         std::cout << "\n";
     }
 }
+
