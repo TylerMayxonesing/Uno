@@ -12,19 +12,19 @@ class Player{
  private:
   std::string aPlayerName;
   int aScore;
-  Hand* aHands;
+  Hand aHands;
  public:
-  Player(std::string playerName, int score, Hand* hands);
-  ~Player();
+  Player(std::string playerName, int score, Hand hands);
+  //~Player();
 
   std::string getPlayerName();
   int getScore();
-  Hand* getHands();
+  Hand getHands();
 
 
   void setPlayerName(std::string playerName);
   void setScore(int score);
-  void setPlayerHand(Hand* hands);
+  void setPlayerHand(Hand hands);
 
 };
 #endif //UNO__PLAYER_H_

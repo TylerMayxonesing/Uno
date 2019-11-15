@@ -4,7 +4,7 @@
 
 #include "Player.h"
 
-Player::Player (std::string playerName, int score, Hand* hands){
+Player::Player (std::string playerName, int score, Hand hands):aHands(hands){
   aPlayerName = playerName;
   aScore = score;
   aHands = hands;
@@ -18,7 +18,7 @@ int Player::getScore(){
   return aScore;
 }
 
-Hand* Player::getHands() {
+Hand Player::getHands() {
   return aHands;
 }
 
@@ -30,6 +30,6 @@ void Player::setScore(int score){
   aScore = score;
 }
 
-void Player::setPlayerHand(Hand* hands) {
+void Player::setPlayerHand(Hand hands) {
   aHands = hands;
 }

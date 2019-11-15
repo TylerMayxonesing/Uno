@@ -9,15 +9,15 @@
 class Deck{
  private:
   int aNumCards;
-  std::vector<Card*> aDeck;
+  std::vector<Card> aDeck;
  public:
-  Deck(int numCards, std::vector<Card*> deck);
-  ~Deck();
+  Deck(int numCards, std::vector<Card> deck);
+  //~Deck();
   int getNumCards();
-  std::vector<Card*> getDeck();
+  std::vector<Card> getDeck();
 
   void setNumCards(int numCards);
-  void setDeck(std::vector<Card*> deck);
+  void setDeck(std::vector<Card> deck);
 
 
 

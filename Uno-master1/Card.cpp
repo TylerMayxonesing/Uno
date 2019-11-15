@@ -4,7 +4,7 @@
 
 #include "Card.h"
 
-Card::Card(const int& value, const std::string& color){
+Card::Card(const int value, const std::string color){
   aValue = value;
   aColor = color;
 }
@@ -27,19 +27,27 @@ void Card::setColor(std::string color){
 
 
 
-bool Card::operator== (const Card* rhs) const{
-  if ((this->getValue()== rhs->getValue() &&
-        this->getColor()== rhs->getColor())) {
+bool Card::operator== (const Card &rhs) const{
+  if ((this->getValue()== rhs.getValue() &&
+      this->getColor()== rhs.getColor())) {
     return true;
+  }
+  else if (this->getValue()!= rhs.getValue() ||
+      this->getColor()!= rhs.getColor()){
+    return false;
   }
 }
 
 
 
-bool Card::operator!= (const Card* rhs) const
+bool Card::operator!= (const Card &rhs) const
 {
-  if ((this->getValue()!= rhs->getValue() &&
-      this->getColor()!= rhs->getColor())) {
+  if ((this->getValue()!= rhs.getValue() ||
+      this->getColor()!= rhs.getColor())) {
+    return true;
+  }
+  else if ((this->getValue()== rhs.getValue() &&
+      this->getColor()== rhs.getColor())) {
     return false;
   }
 }

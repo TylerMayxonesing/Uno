@@ -8,14 +8,14 @@
 #include "Card.h"
 
 class Hand{
- private:
-  std::vector<Card*> aPlayerHand;
  public:
-  Hand(std::vector<Card*> playerHand);
-  ~Hand();
+  Hand(std::vector<Card> playerHand);
+  //~Hand();
+  std::vector<Card> aPlayerHand;
 
-  std::vector<Card*> getPlayerHand();
-  void setPlayerHand(std::vector<Card*> playerHand);
+  std::vector<Card> getPlayerHand();
+  void setPlayerHand(std::vector<Card> playerHand);
+
 
 
 };

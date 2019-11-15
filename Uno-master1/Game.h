@@ -10,6 +10,6 @@
 #include "Player.h"
 #include "Hand.h"
 
-std::vector<Card*> readFile();
+std::vector<Card> readFile();
 void hand();
 #endif //UNO__GAME_H_
