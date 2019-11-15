@@ -31,7 +31,6 @@ std::vector<Card*> readFile() {
     std::stringstream ss;
     ss << line;
     card = nullptr;
-    //deck = nullptr;
     ss >> numCards;
     ss >> color;
     ss >> value;
@@ -58,8 +57,8 @@ std::vector<Card*> readFile() {
 
 void hand(){
   std::vector<Card*> deck = readFile();
-  std::minstd_rand generator(std::chrono::system_clock::now().time_since_epoch().count());
-  std::shuffle(deck.begin(), deck.end(), generator);
+//  std::minstd_rand generator(std::chrono::system_clock::now().time_since_epoch().count());
+//  std::shuffle(deck.begin(), deck.end(), generator);
   Hand* hand;
   hand = nullptr;
   std::vector<Card*> playerHands;
@@ -87,21 +86,44 @@ void hand(){
     players.at(i)->setPlayerHand(hand);
   }
 //Prints out all players Hands
-//  for(int i = 0; i < players.size(); i++){
-//    std::cout << players.at(i)->getPlayerName() << ": ";
-//    for(int j = 0; j < players.at(i)->getHands()->getPlayerHand().size(); j++) {
-//      std::cout << players.at(i)->getHands()->getPlayerHand().at(j)->getColor()
-//      << " " << players.at(i)->getHands()->getPlayerHand().at(j)->getValue() << ", ";
-//    }
-//    std::cout << "\n";
-//  }
+  for(int i = 0; i < players.size(); i++){
+    std::cout << players.at(i)->getPlayerName() << ": ";
+    for(const auto& j : players.at(i)->getHands()->getPlayerHand()) {
+      std::cout << j->getColor() << " " << j->getValue() << ", ";
+    }
+    std::cout << "\n";
+  }
 std::string playerMove;
 
-for (int i = 0; i < players.size(); i++){
-  std::cout << players.at(i)->getPlayerName() << ": What is your move? ";
-  std::cin >> playerMove;
-  if (players.at(i)->getHands()->getPlayerHand().){
-  }
-}
+  std::string requestedCard;
+  std::vector<Card*>::iterator playerCard;
+  Card* cardVersion;
 
+  std::string color;
+  int value;
+
+  Card* x = players.at(0)->getHands()->getPlayerHand().at(0);
+  std::cout << (x == new Card(0,"Red"))
+  ;
+//  for (int i = 0; i < players.size(); i++){
+//    bool cardExists = true;
+//    do {
+//      std::cout << players.at(i)->getPlayerName()<< ": What card do you want?: ";
+//      std::getline(std::cin, requestedCard);
+//      std::istringstream iss(requestedCard);
+//      iss >> color;
+//      iss >> value;
+//      cardVersion = new Card(value, color);
+//      playerCard = find(players.at(i)->getHands()->getPlayerHand().begin(), players.at(i)->getHands()->getPlayerHand().end(), cardVersion);
+//      if (playerCard != players.at(i)->getHands()->getPlayerHand().end()) {
+//        std::cout << "Your card is: " << *playerCard << '\n';
+//        players.at(i)->getHands()->getPlayerHand().erase(playerCard);
+//        cardExists = true;
+//      }
+//      else {
+//        std::cout << "You card doesn't exist: \n";
+//        cardExists = false;
+//      }
+//    } while(!cardExists);
+//  }
 }

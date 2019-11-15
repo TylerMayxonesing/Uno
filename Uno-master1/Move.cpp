@@ -16,9 +16,17 @@ void Move::setMove(std::string playerMove) {
   aPlayerMove = playerMove;
 }
 
-bool Move::canPlay(Card* Card1, Card* Card2) {
-  if (Card1->getColor()==Card2->getColor()||
-  Card1->getValue()==Card2->getValue()){
-    return true;
-  }
-}
+//void Move::moveType(){
+//  std::string requestedCard;
+//  std::vector<std::string>::iterator playerCard;
+//  if(aPlayerMove == "play"){
+//    do {
+//      std::cout << "What card would you like to play?: ";
+//      std::getline(std::cin, requestedCard);
+//    }
+//    while ();
+//  }
+//}
+
+
+

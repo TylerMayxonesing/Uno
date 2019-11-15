@@ -16,6 +16,8 @@ class Hand{
 
   std::vector<Card*> getPlayerHand();
   void setPlayerHand(std::vector<Card*> playerHand);
+
+
 };
 
 #endif //UNO__HAND_H_

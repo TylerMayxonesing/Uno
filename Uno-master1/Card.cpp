@@ -4,16 +4,16 @@
 
 #include "Card.h"
 
-Card::Card(int value, std::string color){
+Card::Card(const int& value, const std::string& color){
   aValue = value;
   aColor = color;
 }
 
-int Card::getValue(){
+int Card::getValue()const{
   return aValue;
 }
 
-std::string Card::getColor(){
+std::string Card::getColor() const{
   return aColor;
 }
 
@@ -25,3 +25,21 @@ void Card::setColor(std::string color){
   aColor = color;
 }
 
+
+
+bool Card::operator== (const Card* rhs) const{
+  if ((this->getValue()== rhs->getValue() &&
+        this->getColor()== rhs->getColor())) {
+    return true;
+  }
+}
+
+
+
+bool Card::operator!= (const Card* rhs) const
+{
+  if ((this->getValue()!= rhs->getValue() &&
+      this->getColor()!= rhs->getColor())) {
+    return false;
+  }
+}

@@ -15,3 +15,4 @@ std::vector <Card*> Hand::getPlayerHand() {
 void Hand::setPlayerHand(std::vector<Card*> playerHand) {
   aPlayerHand = playerHand;
 }
+

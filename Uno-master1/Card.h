@@ -15,12 +15,14 @@ class Card {
   int aValue;
   std::string aColor;
  public:
-  Card(int value, std::string color);
+  Card(const int& value, const std::string& color);
   ~Card();
-  int getValue();
-  std::string getColor();
+  int getValue() const ;
+  std::string getColor() const;
   void setValue(int value);
   void setColor(std::string color);
+  bool operator==(const Card*) const;
+  bool operator!=(const Card*) const;
 
 };
 

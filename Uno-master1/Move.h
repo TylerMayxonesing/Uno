@@ -6,13 +6,16 @@
 #define UNO__MOVE_H_
 #include "Player.h"
 class Move{
- private:
+ private:Card* aCard1;
+ public:
   std::string aPlayerMove;
-  Card* aCard1;public:
+
   Move(std::string playerMove);
   ~Move();
   std::string getMove();
   void setMove(std::string playerMove);
+  void moveType();
 };
+
 
 #endif //UNO__MOVE_H_
