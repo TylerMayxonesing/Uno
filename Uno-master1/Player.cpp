@@ -4,10 +4,10 @@
 
 #include "Player.h"
 
-Player::Player (std::string playerName, int score, Hand hands):aHands(hands){
+Player::Player (std::string playerName, int score, std::vector<Card> playerHand): Hand(playerHand){
   aPlayerName = playerName;
   aScore = score;
-  aHands = hands;
+  aPlayerHand = playerHand;
 }
 
 std::string Player::getPlayerName(){
@@ -18,8 +18,8 @@ int Player::getScore(){
   return aScore;
 }
 
-Hand Player::getHands() {
-  return aHands;
+std::vector<Card> Player::getHands() {
+  return aPlayerHand;
 }
 
 void Player::setPlayerName(std::string playerName){
@@ -30,6 +30,7 @@ void Player::setScore(int score){
   aScore = score;
 }
 
-void Player::setPlayerHand(Hand hands) {
-  aHands = hands;
+void Player::setPlayerHand(std::vector<Card> playerHand) {
+  aPlayerHand = playerHand;
 }
+

@@ -38,8 +38,6 @@ bool Card::operator== (const Card &rhs) const{
   }
 }
 
-
-
 bool Card::operator!= (const Card &rhs) const
 {
   if ((this->getValue()!= rhs.getValue() ||
@@ -50,4 +48,9 @@ bool Card::operator!= (const Card &rhs) const
       this->getColor()== rhs.getColor())) {
     return false;
   }
+}
+
+void operator delete(void *ptr) noexcept
+{
+  free(ptr);
 }

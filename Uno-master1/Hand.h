@@ -7,15 +7,15 @@
 
 #include "Card.h"
 
-class Hand{
+class Hand {
+
  public:
+  std::vector<Card> aPlayerHand;
   Hand(std::vector<Card> playerHand);
   //~Hand();
-  std::vector<Card> aPlayerHand;
 
   std::vector<Card> getPlayerHand();
   void setPlayerHand(std::vector<Card> playerHand);
-
 
 
 };

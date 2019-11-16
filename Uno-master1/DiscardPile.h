@@ -9,10 +9,10 @@
 
 class DiscardPile{
  private:
-  std::vector<Card*> aDiscardPile;
+  std::vector<Card> aDiscardPile;
 
  public:
-  DiscardPile(std::vector<Card*> DiscardPile);
+  DiscardPile(std::vector<Card> DiscardPile);
   ~DiscardPile();
   std::vector<Card*> getDiscardPile();
   void makeDiscardPile(std::vector<Card*> DiscardPile);

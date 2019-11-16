@@ -62,9 +62,10 @@ void hand() {
 //  std::shuffle(deck.begin(), deck.end(), generator);
 
   std::vector<Card> playerHands;
-  Hand hand(playerHands);
-  std::vector<Player> players;
-  Player player("", 0, playerHands);
+  std::vector<Card> discardPile;
+  //Hand hand(playerHands);
+  std::vector<Player*> players;
+  Player* player;
   int numPlayers;
   std::string playerName;
 
@@ -73,7 +74,7 @@ void hand() {
   for (int i = 0; i < numPlayers; i++) {
     std::cout << "Player " << i + 1 << " enter your name: ";
     std::cin >> playerName;
-    player = Player(playerName, 0, hand);
+    player = new Player(playerName, 0, playerHands);
     players.push_back(player);
   }
   std::cin.ignore();
@@ -83,14 +84,15 @@ std::cout << "Player Hands: ----------------------------------------------------
       playerHands.push_back(deck.at(j));
     }
     deck.erase(deck.begin(), deck.begin() + 7);
-    hand = Hand(playerHands);
+    //hand = Hand(playerHands);
+    players.at(i)->setPlayerHand(playerHands);
     playerHands.erase(playerHands.begin(), playerHands.begin() + 7);
-    players.at(i).setPlayerHand(hand);
   }
+
 //Prints out all players Hands
   for (int i = 0; i < players.size(); i++) {
-    std::cout << players.at(i).getPlayerName() << ": ";
-    for (const auto& j : players.at(i).getHands().getPlayerHand()) {
+    std::cout << players.at(i)->getPlayerName() << ": ";
+    for (const auto& j : players.at(i)->getHands()) {
       std::cout << j.getColor() << " " << j.getValue() << ", ";
     }
     std::cout << "\n";
@@ -102,35 +104,67 @@ std::cout << "Player Hands: ----------------------------------------------------
 //  std::cout << Card(1, "Red").getColor() << " " << Card(1, "Red").getValue() << std::endl;
 //  std::cout << (x !=  Card(1,"Red"));
 
+//
+//  std::string requestedCard;
+//  Card cardVersion(0, "Blue");
+//
+//  std::string color;
+//  int value;
+//  bool cardExists = false;
+//  for (int h = 0; h < 3; h ++) {
+//    for (int i = 0; i < players.size(); i++) {
+//      cardExists = false;
+//      while (cardExists == false) {
+//        std::cout << players.at(i)->getPlayerName() << ": What card do you want?: ";
+//        std::getline(std::cin, requestedCard);
+//        std::stringstream ss(requestedCard);
+//        while (ss >> color >> value) {
+//          cardVersion = Card(value, color);
+//        }
+//
+//        const auto& it = std::find(players.at(i)->getHands().getPlayerHand().begin(), players.at(i)->getHands().getPlayerHand().end(), cardVersion);
+//        if(it!=players.at(i)->getHands().getPlayerHand().end()){
+//          std::cout << "IT " << (*it).getColor() << " " << (*it).getValue()<<std::endl;
+//        //players.at(i)->getHands().getPlayerHand().erase(it);
+//         for (const auto& j : players.at(i)->getHands().getPlayerHand()) {
+//           std::cout << j.getColor() << " " << j.getValue() << ", ";
+//         }
+//        }
 
-  std::string requestedCard;
-  Card cardVersion(0, "Blue");
 
-  std::string color;
-  int value;
-  bool cardExists = false;
-  for (int i = 0; i < 3; i ++) {
-    for (int i = 0; i < players.size(); i++) {
-      cardExists = false;
-      while (cardExists == false) {
-        std::cout << players.at(i).getPlayerName() << ": What card do you want?: ";
-        std::getline(std::cin, requestedCard);
-        std::stringstream ss(requestedCard);
-        while (ss >> color >> value) {
-          cardVersion = Card(value, color);
-        }
-        for (std::vector<Card>::iterator it = players.at(i).getHands().getPlayerHand().begin();
-             it != players.at(i).getHands().getPlayerHand().end(); it++) {
-          std::cout << (*it).getColor() << " " << (*it).getValue() << ", "<<std::endl;
-          if (*it == cardVersion) {
-            std::cout << "Your card is: " << (*it).getColor() << " " << (*it).getValue() << std::endl;
-            players.at(i).getHands().getPlayerHand().erase(it);
-            cardExists = true;
-            break;
-          }
-        }
-      }
 
-    }
-  }
+
+
+
+
+
+
+
+
+//std::vector<Card> emptyVec;
+//std::vector<Card>::iterator it = emptyVec.end();
+//        for ( it = players.at(i)->getHands().getPlayerHand().begin();
+//             it != players.at(i)->getHands().getPlayerHand().end(); it++) {
+//          std::cout << (*it).getColor() << " " << (*it).getValue() << ", " << std::endl;
+//          if (*it == cardVersion) {
+//            std::cout << "Your card is: " << (*it).getColor() << " " << (*it).getValue() << std::endl;
+//
+//            std::cout << "After erasing: " << std::endl;
+//            for (auto t = players.at(i)->getHands().getPlayerHand().begin();
+//                 t != players.at(i)->getHands().getPlayerHand().end(); t++){
+//              std::cout << (*t).getColor() << " " << (*t).getValue() << std::endl;
+//            }
+//            cardExists = true;
+//            break;
+//          }
+//          players.at(i)->getHands().getPlayerHand().erase(players.at(i)->getHands().getPlayerHand().begin(),
+//                                                          players.at(i)->getHands().getPlayerHand().begin()+1);
+//        }
+
+
+//      }
+//
+//
+//    }
+//  }
 }

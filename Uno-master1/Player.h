@@ -7,24 +7,24 @@
 
 #include "Hand.h"
 
-class Player{
+class Player:Hand{
 
  private:
   std::string aPlayerName;
   int aScore;
-  Hand aHands;
  public:
-  Player(std::string playerName, int score, Hand hands);
+  Player(std::string playerName, int score, std::vector<Card> playerHand);
+  Player(const std::vector<Card>& player_hand, const std::string& a_player_name);
   //~Player();
 
   std::string getPlayerName();
   int getScore();
-  Hand getHands();
+  std::vector<Card> getHands();
 
 
   void setPlayerName(std::string playerName);
   void setScore(int score);
-  void setPlayerHand(Hand hands);
+  void setPlayerHand(std::vector<Card> playerHand);
 
 };
 #endif //UNO__PLAYER_H_
