@@ -1,3 +1,9 @@
+
+
+//
+// Created by T Alpha 1 on 11/2/2019.
+//
+
 #include "Game.h"
 #include <random>
 #include <iostream>
@@ -63,7 +69,7 @@ void hand() {
     int numPlayers;
     std::string playerName;
     auto discard = DiscardPile(discardedCards);
-    std::cout << "Enter the number of players in the game: ";
+    std::cout << "Enter the number of players you want: ";
     std::cin >> numPlayers;
     for (int i = 0; i < numPlayers; i++) {
         std::cout << "Player " << i + 1 << " enter your name: ";
@@ -72,7 +78,7 @@ void hand() {
         players.push_back(player);
     }
     std::cin.ignore();
-//    std::cout << "Player Hands: ------------------------------------------------------------------------------------------" << std::endl;
+    std::cout << "Player Hands: ------------------------------------------------------------------------------------------" << std::endl;
     for (int i = 0; i < players.size(); i++) {
         for (int j = 0; j < 7; j++) {
             playerHand.push_back(deck.at(j));
@@ -89,10 +95,10 @@ void hand() {
         discard.setDiscardPile(discardedCards);
         discardedCards.erase(discardedCards.begin(),discardedCards.begin()+1);
     }
-    for (int i = 0; i <1; i++) {
-    std::cout << "Top of discard pile: "<<discard.getDiscardPile().at(i).getColor() << " "
-              << discard.getDiscardPile().at(i).getValue() << std::endl;
-    }
+//  for (int i = 0; i <1; i++) {
+//    std::cout << "Discard pile: "<<discard.getDiscardPile().at(i).getColor() << " "
+//              << discard.getDiscardPile().at(i).getValue() << std::endl;
+//  }
 
 
 //Prints out all players Hands
@@ -109,14 +115,30 @@ void hand() {
     std::string playerResponse;
     Move playerMove(playerResponse);
 
-    for (int i = 0; i < players.size(); i++) {
-        for (int j = 0; j < 3; j++) {
-            std::cout << players.at(i).getPlayerName() << ", enter your move or h for help: ";
-            std::getline(std::cin, playerResponse);
+    std::string buf;                 // Have a buffer string
+    std::vector<std::string> tokens; // Create vector to hold our words
+    std::string move;
+    std::string card;
 
-            players.at(i) = Move(playerResponse).moveType(players.at(i));
+
+    for (int i = 0; i < players.size(); i++) {
+            std::cout << players.at(i).getPlayerName() << " what would you like to do? ";
+            std::getline(std::cin, playerResponse);
+            std::stringstream ss(playerResponse);
+            while (ss >> buf)
+            tokens.push_back(buf);
+            for (int i = 0; i < tokens.size(); i++) {
+            move = tokens.at(0);
+            card = tokens.at(1) + tokens.at(2);}
+            players.at(i) = Move(move).moveType(players.at(i));
+
+    }
+
+    }
+
+
+
+//
 
             //players.at(i) = playCard(players.at(i));
-        }
-    }
-}
+
