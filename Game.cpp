@@ -11,6 +11,9 @@
 #include "Player.h"
 #include "Hand.h"
 #include "DiscardPile.h"
+#include <functional>
+#include "InputValidation.h"
+#include "Move.h"
 
 //Reads through the file and store the cards into a deck
 std::vector<Card> readFile() {
@@ -55,13 +58,12 @@ void hand() {
 
     std::vector<Card> playerHand;
     std::vector<Card> discardedCards;
-    //Hand hand(playerHands);
     std::vector<Player> players;
     Player player(" ", 0, playerHand);
     int numPlayers;
     std::string playerName;
     auto discard = DiscardPile(discardedCards);
-    std::cout << "Enter the number of players you want: ";
+    std::cout << "Enter the number of players in the game: ";
     std::cin >> numPlayers;
     for (int i = 0; i < numPlayers; i++) {
         std::cout << "Player " << i + 1 << " enter your name: ";
@@ -70,85 +72,51 @@ void hand() {
         players.push_back(player);
     }
     std::cin.ignore();
-    std::cout << "Player Hands: ------------------------------------------------------------------------------------------" << std::endl;
+//    std::cout << "Player Hands: ------------------------------------------------------------------------------------------" << std::endl;
     for (int i = 0; i < players.size(); i++) {
         for (int j = 0; j < 7; j++) {
             playerHand.push_back(deck.at(j));
         }
         deck.erase(deck.begin(), deck.begin() + 7);
-        //hand = Hand(playerHands);
         players.at(i).setPlayerHand(playerHand);
         playerHand.erase(playerHand.begin(), playerHand.begin() + 7);
     }
 
 
-//    std::cout<<"The deck is after player drew"<<deck.size();
-    for ( int i = 0; i<1 ; i++){
+    for ( int i = 0; i < 1 ; i++){
         discardedCards.push_back(deck.at(i));
         deck.erase(deck.begin(),deck.begin()+1);
         discard.setDiscardPile(discardedCards);
         discardedCards.erase(discardedCards.begin(),discardedCards.begin()+1);
     }
-//    std::cout<<"The deck is after top card is placed"<<deck.size();
     for (int i = 0; i <1; i++) {
-        std::cout << "Discard pile: "<<discard.getDiscardPile().at(i).getColor() << " "
-                  << discard.getDiscardPile().at(i).getValue() << std::endl;
+    std::cout << "Top of discard pile: "<<discard.getDiscardPile().at(i).getColor() << " "
+              << discard.getDiscardPile().at(i).getValue() << std::endl;
     }
 
 
 //Prints out all players Hands
     for (int i = 0; i < players.size(); i++) {
         std::cout << players.at(i).getPlayerName() << ": ";
-        for (const auto& j : players.at(i).getHands()) {
+        for (const auto& j : players.at(i).getHand()) {
             std::cout << j.getColor() << " " << j.getValue() << ", ";
         }
         std::cout << "\n";
     }
 
 
-//std::cout << (players.at(0)->getHands().at(0) == Card(1, "Red"));
 
-    std::string requestedCard;
-    Card cardVersion(0, "Blue");
+    std::string playerResponse;
+    Move playerMove(playerResponse);
 
-    std::string color;
-    int value;
-    bool cardExists = false;
-    for (int h = 0; h < 3; h ++) {
-        for (int i = 0; i < players.size(); i++) {
-            cardExists = false;
-            while (cardExists == false) {
-                std::cout << players.at(i).getPlayerName() << ": What card do you want?: ";
-                std::getline(std::cin, requestedCard);
-                std::stringstream ss(requestedCard);
-                while (ss >> color >> value) {
-                    cardVersion = Card(value, color);
-                }
+    for (int i = 0; i < players.size(); i++) {
+        for (int j = 0; j < 3; j++) {
+            std::cout << players.at(i).getPlayerName() << ", enter your move or h for help: ";
+            std::getline(std::cin, playerResponse);
 
-                auto cmp  = std::bind(&Card::matches, cardVersion, std::placeholders::_1);
-                auto cardToRemove = std::find_if(players.at(i).getHands().begin(), players.at(i).getHands().end(), cmp);
-                if(cardToRemove != players.at(i).getHands().end()){ //found the card
-                    players.at(i).getHands().erase(cardToRemove);
-                    cardExists = true;
-                }
-                else {
-                    std::cout << "Your card is invalid." << std::endl;
-                }
-            }
+            players.at(i) = Move(playerResponse).moveType(players.at(i));
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+            //players.at(i) = playCard(players.at(i));
         }
     }
 }
