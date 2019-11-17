@@ -19,7 +19,7 @@ class Player:Hand{
 
   std::string getPlayerName();
   int getScore();
-  std::vector<Card> getHands();
+  std::vector<Card>& getHands();
 
 
   void setPlayerName(std::string playerName);

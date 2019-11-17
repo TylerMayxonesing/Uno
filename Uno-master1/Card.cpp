@@ -28,29 +28,27 @@ void Card::setColor(std::string color){
 
 
 bool Card::operator== (const Card &rhs) const{
-  if ((this->getValue()== rhs.getValue() &&
-      this->getColor()== rhs.getColor())) {
+  if (((*this).getValue()== rhs.getValue() &&
+      (*this).getColor()== rhs.getColor())) {
     return true;
   }
-  else if (this->getValue()!= rhs.getValue() ||
-      this->getColor()!= rhs.getColor()){
+  else if ((*this).getValue()!= rhs.getValue() ||
+      (*this).getColor()!= rhs.getColor()){
     return false;
   }
 }
 
 bool Card::operator!= (const Card &rhs) const
 {
-  if ((this->getValue()!= rhs.getValue() ||
-      this->getColor()!= rhs.getColor())) {
+  return !(*this == rhs);
+}
+
+bool Card::matches(const Card& card){
+  if(*this==card){
     return true;
   }
-  else if ((this->getValue()== rhs.getValue() &&
-      this->getColor()== rhs.getColor())) {
+  else{
     return false;
   }
 }
 
-void operator delete(void *ptr) noexcept
-{
-  free(ptr);
-}

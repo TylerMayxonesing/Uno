@@ -23,7 +23,7 @@ class Card {
   void setColor(std::string color);
   bool operator==(const Card &) const;
   bool operator!=(const Card &) const;
-
+  bool matches(const Card& card);
 };
 
 
