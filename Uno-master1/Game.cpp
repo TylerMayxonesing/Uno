@@ -65,7 +65,7 @@ void Game::playGame() {
     aPlayers.push_back(player);
   }
   std::cin.ignore();
-  std::cout << "Player Hands: ------------------------------------------------------------------------------------------" << std::endl;
+  //std::cout << "Player Hands: ------------------------------------------------------------------------------------------" << std::endl;
   for (int i = 0; i < aPlayers.size(); i++) {
     for (int j = 0; j < 7; j++) {
       playerHand.push_back(aDeck.at(j));
@@ -85,62 +85,75 @@ void Game::playGame() {
 
 
 //Prints out all players Hands
-  for (int i = 0; i < aPlayers.size(); i++) {
-    std::cout << aPlayers.at(i).getPlayerName() << ": ";
-    for (const auto& j : aPlayers.at(i).getHand()) {
-      std::cout << j.getColor() << " " << j.getValue() << ", ";
-    }
-    std::cout << "\n";
-  }
+//  for (int i = 0; i < aPlayers.size(); i++) {
+//    std::cout << aPlayers.at(i).getPlayerName() << ": ";
+//    for (const auto& j : aPlayers.at(i).getHand()) {
+//      std::cout << j.getColor() << " " << j.getValue() << ", ";
+//    }
+//    std::cout << "\n";
+//  }
 
 
 
   std::string playerResponse;
   Move playerMove(playerResponse);
+  std::string move;
+  std::string color;
+  int value;
+  Card card(0,"blank");
+  bool cardExists;
+
+  for (int i = 0; i < aPlayers.size(); i++) {
+    cardExists = false;
+    while (cardExists == false){
 
 
+    std::cout << "Top of discard pile: " << aDiscardPile.at(aDiscardPile.size() - 1).getColor() << " "
+              << aDiscardPile.at(aDiscardPile.size() - 1).getValue() << std::endl;
+      std::cout << "You hand: ";
+      for (int j = 0; j < aPlayers.at(i).getHand().size(); j++) {
+      std::cout << aPlayers.at(i).getHand().at(j).getColor() << " " << aPlayers.at(i).getHand().at(j).getValue() << ", ";
+      if(j == aPlayers.at(i).getHand().size()-1){
+        std::cout << "\n";
+      }
+    }
+    std::cout << aPlayers.at(i).getPlayerName() << ", enter your move or h for help: ";
+    std::getline(std::cin, playerResponse);
+    std::stringstream ss(playerResponse);
+    while (ss >> move >> color >> value) {
+      card = Card(value, color);
+    }
 
-    for (int i = 0; i < aPlayers.size(); i++) {
-      std::cout << "Top card is: " << aDiscardPile.at(aDiscardPile.size()-1).getColor() << " " << aDiscardPile.at(aDiscardPile.size()-1).getValue() << std::endl;
-        std::cout << aPlayers.at(i).getPlayerName() << " what would you like to do? ";
-        std::getline(std::cin, playerResponse);
-        playerMove = Move(playerResponse);
-        if(playerMove.moveType() == "play"){
-          playCard(aPlayers.at(i));
-        }
-        if(playerMove.moveType() == "draw"){
-          draw(aPlayers.at(i));
-        }
-        for (int j = 0 ; j < aPlayers.at(i).getHand().size(); j++) {
-          std::cout << aPlayers.at(j).getHand().at(j).getColor() << " " << aPlayers.at(j).getHand().at(j).getValue() << std::endl;
-        }
+    playerMove = Move(move);
+    if (playerMove.moveType() == "play") {
+      cardExists = playCard(aPlayers.at(i), card);
+    }
+  }
+//        if(playerMove.moveType() == "draw"){
+//          draw(aPlayers.at(i));
+//        }
+//        for (int j = 0 ; j < aPlayers.at(i).getHand().size(); j++) {
+//          std::cout << aPlayers.at(j).getHand().at(j).getColor() << " " << aPlayers.at(j).getHand().at(j).getValue() << std::endl;
+//        }
     }
 
 }
 
-void Game::playCard(Player& player) {
+bool Game::playCard(Player& player, Card card) {
   std::string requestedCard;
-  Card cardVersion(0, "Blank");
-  std::string color;
-  int value;
+
   bool cardExists = false;
-  while (cardExists == false) {
-    std::cout << player.getPlayerName() << ": What card do you want?: ";
-    std::getline(std::cin, requestedCard);
-    std::stringstream ss(requestedCard);
-    while (ss >> color >> value) {
-      cardVersion = Card(value, color);
-    }
-    auto cardToRemove = std::find(player.getHand().begin(), player.getHand().end(), cardVersion);
+    auto cardToRemove = std::find(player.getHand().begin(), player.getHand().end(), card);
     if(cardToRemove != player.getHand().end()){
-      aDiscardPile.push_back(*cardToRemove);
+      std::cout << (*cardToRemove).getColor() << " " << (*cardToRemove).getValue() << std::endl;
       player.getHand().erase(cardToRemove);
-      cardExists = true;
+      return  true;
     }
     else {
       std::cout << "Your card is invalid." << std::endl;
+      return false;
     }
-  }
+
 }
 
 void Game::draw(Player& player) {

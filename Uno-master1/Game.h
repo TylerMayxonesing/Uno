@@ -38,7 +38,7 @@ class Game{
   //~Game();
   void readFile();
   void playGame();
-  void playCard(Player& player);
+  bool playCard(Player& player, Card);
   void draw(Player& player);
 
 
