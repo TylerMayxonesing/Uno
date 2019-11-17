@@ -14,17 +14,19 @@ class Player:Hand{
   int aScore;
  public:
   Player(std::string playerName, int score, std::vector<Card> playerHand);
-  Player(const std::vector<Card>& player_hand, const std::string& a_player_name);
   //~Player();
 
   std::string getPlayerName();
   int getScore();
-  std::vector<Card>& getHands();
+  std::vector<Card>& getHand();
 
 
   void setPlayerName(std::string playerName);
   void setScore(int score);
   void setPlayerHand(std::vector<Card> playerHand);
+
+  std::string getPlayerMove();
+  void setPlayerMove(std::string);
 
 };
 #endif //UNO__PLAYER_H_

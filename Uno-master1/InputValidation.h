@@ -8,8 +8,21 @@
 #include <string>
 #include <iostream>
 #include "StringMethods.h"
+#include <random>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
+#include "Card.h"
+#include <algorithm>
+#include "Deck.h"
+#include "Player.h"
+#include "Hand.h"
+#include "DiscardPile.h"
+#include <functional>
+bool shortFormInput(std::string, std::string);
+Player playCard(Player );
 
-std::string shortFormInput(std::string);
 
 
 #endif //UNO__INPUTVALIDATION_H_

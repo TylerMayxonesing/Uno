@@ -11,10 +11,10 @@ class Move{
   std::string aPlayerMove;
 
   Move(std::string playerMove);
-  ~Move();
+  //~Move();
   std::string getMove();
   void setMove(std::string playerMove);
-  void moveType();
+  Player moveType(Player player);
 };
 
 

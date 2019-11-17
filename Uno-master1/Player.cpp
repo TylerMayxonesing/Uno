@@ -18,7 +18,7 @@ int Player::getScore(){
   return aScore;
 }
 
-std::vector<Card>& Player::getHands() {
+std::vector<Card>& Player::getHand() {
   return aPlayerHand;
 }
 
