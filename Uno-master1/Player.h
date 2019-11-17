@@ -6,7 +6,7 @@
 #define UNO__PLAYER_H_
 
 #include "Hand.h"
-
+#include <algorithm>
 class Player:Hand{
 
  private:
@@ -27,6 +27,8 @@ class Player:Hand{
 
   std::string getPlayerMove();
   void setPlayerMove(std::string);
+
+  void discardCardToDiscardPile(Card card);
 
 };
 #endif //UNO__PLAYER_H_

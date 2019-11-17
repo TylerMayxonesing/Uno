@@ -3,28 +3,17 @@
 //
 
 #include "Game.h"
-#include <random>
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <sstream>
-#include "Card.h"
-#include <algorithm>
-#include "Deck.h"
-#include <chrono>
-#include "Player.h"
-#include "Hand.h"
-#include "DiscardPile.h"
-#include <functional>
-#include "InputValidation.h"
-#include "Move.h"
 
-//Reads through the file and store the cards into a deck
-std::vector<Card> readFile() {
+
+
+
+Game::Game(){
+}
+
+void Game::readFile() {
   Card card(0,"blank");
   std::vector<Card> cards;
   Deck deck(0,cards);
-
   int numCards;
   int value;
   std::string color;
@@ -44,25 +33,25 @@ std::vector<Card> readFile() {
       deck =  Deck(numCards, cards);
     }
   }
-
+  aDeck = deck.getDeck();
+  playGame();
 //    std::cout << "All the Cards in the file: ---------------------------------------------------------------------------" << std::endl;
 //    for (int i = 0; i < deck.getDeck().size(); i++) {
 //        std::cout << deck.getDeck().at(i).getColor() << " "
 //                  << deck.getDeck().at(i).getValue()  << std::endl;
 //    }
 //    std::cout<<"The deck is before anything:"<<deck.getDeck().size();
-  return deck.getDeck();
+  //return deck.getDeck();
 }
 
 
-void hand() {
-  std::vector<Card> deck = readFile();
+void Game::playGame() {
+  //std::vector<Card> playingDeck = deck.getDeck();
 //  std::minstd_rand generator(std::chrono::system_clock::now().time_since_epoch().count());
 //  std::shuffle(deck.begin(), deck.end(), generator);
-
   std::vector<Card> playerHand;
   std::vector<Card> discardedCards;
-  std::vector<Player> players;
+  //std::vector<Player> players;
   Player player(" ", 0, playerHand);
   int numPlayers;
   std::string playerName;
@@ -73,36 +62,31 @@ void hand() {
     std::cout << "Player " << i + 1 << " enter your name: ";
     std::cin >> playerName;
     player =  Player(playerName, 0, playerHand);
-    players.push_back(player);
+    aPlayers.push_back(player);
   }
   std::cin.ignore();
   std::cout << "Player Hands: ------------------------------------------------------------------------------------------" << std::endl;
-  for (int i = 0; i < players.size(); i++) {
+  for (int i = 0; i < aPlayers.size(); i++) {
     for (int j = 0; j < 7; j++) {
-      playerHand.push_back(deck.at(j));
+      playerHand.push_back(aDeck.at(j));
     }
-    deck.erase(deck.begin(), deck.begin() + 7);
-    players.at(i).setPlayerHand(playerHand);
+    aDeck.erase(aDeck.begin(), aDeck.begin() + 7);
+    aPlayers.at(i).setPlayerHand(playerHand);
     playerHand.erase(playerHand.begin(), playerHand.begin() + 7);
   }
-
-
   for ( int i = 0; i < 1 ; i++){
-    discardedCards.push_back(deck.at(i));
-    deck.erase(deck.begin(),deck.begin()+1);
+    discardedCards.push_back(aDeck.at(i));
+    aDeck.erase(aDeck.begin(),aDeck.begin()+1);
     discard.setDiscardPile(discardedCards);
     discardedCards.erase(discardedCards.begin(),discardedCards.begin()+1);
   }
-//  for (int i = 0; i <1; i++) {
-//    std::cout << "Discard pile: "<<discard.getDiscardPile().at(i).getColor() << " "
-//              << discard.getDiscardPile().at(i).getValue() << std::endl;
-//  }
+
 
 
 //Prints out all players Hands
-  for (int i = 0; i < players.size(); i++) {
-    std::cout << players.at(i).getPlayerName() << ": ";
-    for (const auto& j : players.at(i).getHand()) {
+  for (int i = 0; i < aPlayers.size(); i++) {
+    std::cout << aPlayers.at(i).getPlayerName() << ": ";
+    for (const auto& j : aPlayers.at(i).getHand()) {
       std::cout << j.getColor() << " " << j.getValue() << ", ";
     }
     std::cout << "\n";
@@ -110,18 +94,48 @@ void hand() {
 
 
 
-std::string playerResponse;
-  Move playerMove(playerResponse);
+  std::string playerResponse;
+  //Move playerMove(playerResponse);
 
-    for (int i = 0; i < players.size(); i++) {
-      for (int j = 0; j < 3; j++) {
-        std::cout << players.at(i).getPlayerName() << " what would you like to do? ";
-        std::getline(std::cin, playerResponse);
+    for (int i = 0; i < aPlayers.size(); i++) {
+      std::cout << "Top card is: " << discard.getDiscardPile().at(0).getColor() << " " << discard.getDiscardPile().at(0).getValue() << std::endl;
+      for (int j = 0; j < 5; j++) {
+        playCard(aPlayers.at(i));
+//        std::cout << aPlayers.at(i).getPlayerName() << " what would you like to do? ";
+//        std::getline(std::cin, playerResponse);
+//
+//        aPlayers.at(i) = Move(playerResponse).moveType(aPlayers.at(i));
 
-        players.at(i) = Move(playerResponse).moveType(players.at(i));
-
-        //players.at(i) = playCard(players.at(i));
+      }
+      for (int i = 0; i < aDiscardPile.size(); i ++){
+        std::cout << aDiscardPile.at(i).getColor() << " " << aDiscardPile.at(i).getValue() << std::endl;
       }
     }
+
+}
+
+void Game::playCard(Player& player) {
+  std::string requestedCard;
+  Card cardVersion(0, "Blank");
+  std::string color;
+  int value;
+  bool cardExists = false;
+  while (cardExists == false) {
+    std::cout << player.getPlayerName() << ": What card do you want?: ";
+    std::getline(std::cin, requestedCard);
+    std::stringstream ss(requestedCard);
+    while (ss >> color >> value) {
+      cardVersion = Card(value, color);
+    }
+    auto cardToRemove = std::find(player.getHand().begin(), player.getHand().end(), cardVersion);
+    if(cardToRemove != player.getHand().end()){
+      aDiscardPile.push_back(*cardToRemove);
+      player.getHand().erase(cardToRemove);
+      cardExists = true;
+    }
+    else {
+      std::cout << "Your card is invalid." << std::endl;
+    }
+  }
 
 }

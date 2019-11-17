@@ -4,6 +4,7 @@
 
 #include "Move.h"
 #include "InputValidation.h"
+#include "Game.h"
 
 Move::Move(std::string playerMove){
   aPlayerMove = playerMove;
@@ -18,9 +19,9 @@ void Move::setMove(std::string playerMove) {
 }
 
 Player Move::moveType(Player player){
-  if(shortFormInput(aPlayerMove,"play")){
-    player = playCard(player);
-  }
+//  if(shortFormInput(aPlayerMove,"play")){
+//    playCard(player);
+//  }
   if(shortFormInput(aPlayerMove,"draw")){
     std::cout << "draw" << std::endl;
   }

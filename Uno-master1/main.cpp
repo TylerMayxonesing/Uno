@@ -4,6 +4,6 @@
 int main() {
 
   //readFile();
-  hand();
+  Game().readFile();
   return 0;
 }

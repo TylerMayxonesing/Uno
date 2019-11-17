@@ -21,7 +21,7 @@
 #include "DiscardPile.h"
 #include <functional>
 bool shortFormInput(std::string, std::string);
-Player playCard(Player );
+//Player playCard(Player );
 
 
 

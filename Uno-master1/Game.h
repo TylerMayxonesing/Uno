@@ -9,7 +9,36 @@
 #include "Deck.h"
 #include "Player.h"
 #include "Hand.h"
+#include <random>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
+#include <algorithm>
+#include <chrono>
+#include "DiscardPile.h"
+#include <functional>
+#include "InputValidation.h"
+#include "Move.h"
 
-std::vector<Card> readFile();
-void hand();
+//std::vector<Card> readFile();
+
+//void game();
+
+//Player& playCard(Player);
+class Game{
+ private:
+  std::vector<Card>& aDiscardPile;
+  std::vector<Card> aDeck;
+  std::vector<Player> aPlayers;
+
+ public:
+  Game();
+  //~Game();
+  void readFile();
+  void playGame();
+  void playCard(Player& player);
+
+
+};
 #endif //UNO__GAME_H_

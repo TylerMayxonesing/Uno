@@ -35,5 +35,10 @@ void Player::setPlayerHand(std::vector<Card> playerHand) {
 }
 
 
-
+void Player::discardCardToDiscardPile(Card card){
+  std::vector<Card>::iterator found = std::find(aPlayerHand.begin(), aPlayerHand.end(), card);
+  if (found != aPlayerHand.end()){
+    aPlayerHand.erase(found);
+  }
+}
 
