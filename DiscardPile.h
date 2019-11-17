@@ -1,7 +1,3 @@
-//
-// Created by T Alpha 1 on 11/2/2019.
-//
-
 #ifndef UNO__DISCARDPILE_H_
 #define UNO__DISCARDPILE_H_
 
@@ -9,13 +5,14 @@
 
 class DiscardPile{
 private:
-    std::vector<Card*> aDiscardPile;
 
 public:
-    DiscardPile(std::vector<Card*> DiscardPile);
-    ~DiscardPile();
-    std::vector<Card*> getDiscardPile();
-    void makeDiscardPile(std::vector<Card*> DiscardPile);
+    std::vector<Card> aDiscardPile;
+    DiscardPile(std::vector<Card> playedCard);
+//    ~DiscardPile();
+    std::vector<Card> getDiscardPile();
+    void setDiscardPile(std::vector<Card> DiscardPile);
 
 };
+
 #endif //UNO__DISCARDPILE_H_

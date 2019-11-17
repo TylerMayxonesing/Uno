@@ -4,14 +4,14 @@
 
 #include "DiscardPile.h"
 
-DiscardPile::DiscardPile(std::vector <Card*> DiscardPile) {
+DiscardPile::DiscardPile(std::vector <Card> DiscardPile) {
     aDiscardPile = DiscardPile;
 }
 
-std::vector<Card *> DiscardPile::getDiscardPile() {
+std::vector<Card> DiscardPile::getDiscardPile() {
     return aDiscardPile;
 }
 
-void DiscardPile::makeDiscardPile(std::vector<Card *> DiscardPile) {
+void DiscardPile::setDiscardPile(std::vector<Card> DiscardPile) {
     aDiscardPile = DiscardPile;
 }
