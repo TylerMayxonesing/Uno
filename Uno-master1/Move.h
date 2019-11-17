@@ -14,7 +14,7 @@ class Move{
   //~Move();
   std::string getMove();
   void setMove(std::string playerMove);
-  Player moveType(Player player);
+  std::string moveType();
 };
 
 

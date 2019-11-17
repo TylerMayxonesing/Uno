@@ -28,9 +28,10 @@
 //Player& playCard(Player);
 class Game{
  private:
-  std::vector<Card>& aDiscardPile;
+  std::vector<Card> aDiscardPile;
   std::vector<Card> aDeck;
   std::vector<Player> aPlayers;
+  std::vector <Card> aDrawPile;
 
  public:
   Game();
@@ -38,6 +39,7 @@ class Game{
   void readFile();
   void playGame();
   void playCard(Player& player);
+  void draw(Player& player);
 
 
 };

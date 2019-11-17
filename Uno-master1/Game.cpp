@@ -76,6 +76,7 @@ void Game::playGame() {
   }
   for ( int i = 0; i < 1 ; i++){
     discardedCards.push_back(aDeck.at(i));
+    aDiscardPile.push_back(aDeck.at(i));
     aDeck.erase(aDeck.begin(),aDeck.begin()+1);
     discard.setDiscardPile(discardedCards);
     discardedCards.erase(discardedCards.begin(),discardedCards.begin()+1);
@@ -95,21 +96,24 @@ void Game::playGame() {
 
 
   std::string playerResponse;
-  //Move playerMove(playerResponse);
+  Move playerMove(playerResponse);
+
+
 
     for (int i = 0; i < aPlayers.size(); i++) {
-      std::cout << "Top card is: " << discard.getDiscardPile().at(0).getColor() << " " << discard.getDiscardPile().at(0).getValue() << std::endl;
-      for (int j = 0; j < 5; j++) {
-        playCard(aPlayers.at(i));
-//        std::cout << aPlayers.at(i).getPlayerName() << " what would you like to do? ";
-//        std::getline(std::cin, playerResponse);
-//
-//        aPlayers.at(i) = Move(playerResponse).moveType(aPlayers.at(i));
-
-      }
-      for (int i = 0; i < aDiscardPile.size(); i ++){
-        std::cout << aDiscardPile.at(i).getColor() << " " << aDiscardPile.at(i).getValue() << std::endl;
-      }
+      std::cout << "Top card is: " << aDiscardPile.at(aDiscardPile.size()-1).getColor() << " " << aDiscardPile.at(aDiscardPile.size()-1).getValue() << std::endl;
+        std::cout << aPlayers.at(i).getPlayerName() << " what would you like to do? ";
+        std::getline(std::cin, playerResponse);
+        playerMove = Move(playerResponse);
+        if(playerMove.moveType() == "play"){
+          playCard(aPlayers.at(i));
+        }
+        if(playerMove.moveType() == "draw"){
+          draw(aPlayers.at(i));
+        }
+        for (int j = 0 ; j < aPlayers.at(i).getHand().size(); j++) {
+          std::cout << aPlayers.at(j).getHand().at(j).getColor() << " " << aPlayers.at(j).getHand().at(j).getValue() << std::endl;
+        }
     }
 
 }
@@ -137,5 +141,10 @@ void Game::playCard(Player& player) {
       std::cout << "Your card is invalid." << std::endl;
     }
   }
-
 }
+
+void Game::draw(Player& player) {
+  aDrawPile = aDeck;
+  player.getHand().push_back(aDrawPile.at(0));
+}
+

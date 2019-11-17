@@ -18,12 +18,12 @@ void Move::setMove(std::string playerMove) {
   aPlayerMove = playerMove;
 }
 
-Player Move::moveType(Player player){
-//  if(shortFormInput(aPlayerMove,"play")){
-//    playCard(player);
-//  }
+std::string Move::moveType(){
+  if(shortFormInput(aPlayerMove,"play")){
+   return "play";
+  }
   if(shortFormInput(aPlayerMove,"draw")){
-    std::cout << "draw" << std::endl;
+    return "draw";
   }
   if(shortFormInput(aPlayerMove,"uno")){
     std::cout << "uno" << std::endl;
@@ -39,7 +39,6 @@ Player Move::moveType(Player player){
                  "- quit\n"
                  "- help" << std::endl;
   }
-  return player;
 }
 
 
