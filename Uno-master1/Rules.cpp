@@ -3,58 +3,65 @@
 //
 
 #include "Rules.h"
+#include <iterator>
 
-int Rules::startingHandSize(int starting_hand) {
-  return starting_hand;}
+int Rules::startingHandSize() {
+  return aStartingHand;
+}
 
-int Rules::unoCallOutPenalty(int uno_penalty) {
-  return uno_penalty;
+int Rules::unoCallOutPenalty() {
+  return aUnoPenalty;
 }
 
 
-int Rules::badUnoCalloutPenalty(int bad_uno_penalty) {
-  return bad_uno_penalty;}
+int Rules::badUnoCalloutPenalty() {
+  return aBadUnoPenalty;}
 
 
-int Rules::drawLimit(int max_draw) {
-  if(max_draw == 'N') {
+int Rules::drawLimit() {
+  if(aMaxDraw == 'N') {
     return 0;
   }
-  else {return max_draw;}
+  else {
+    return aMaxDraw;
+  }
 }
 
 
 
-int Rules::mustPlayCardEachTurn(char must_play) {
+
+bool Rules::mustPlayCardEachTurn() {
 
 
 
-  if (must_play == 't'){
-    return 1;
+  if (aMustPlay == 't'){
+    return true;
 //        std::cout<<"it is true";
   }
-  else if (must_play =='f') {
-    return 0;
+  else if (aMustPlay == 'f') {
+    return false;
 //        std::cout<<"it is false";
   }
 
 }
 
-int Rules::renegingFunction(char reneging) {
+bool Rules::renegingFunction() {
 //    enum level reneging;
-  if (reneging == 'A'){
-    return 0;
+  if (aReneging == 'A'){
+    return false;
 //        reneging = static_cast<level>('A');
   }
-  if (reneging == 'L'){
-    return 1;
+  if (aReneging == 'L'){
+    return true;
 //        reneging = static_cast<level>('L');
   }
 
 }
+Rules::Rules(){
 
-void Rules::readfile(int starting_hand,int uno_penalty,int bad_uno_penalty,int max_draw, char must_play, char reneging) {
-  std::ifstream file("/Users/rayngan/desktop/Midterm2/Configs/rules/Default.txt");
+}
+void Rules::readfile(int starting_hand,int uno_penalty,int bad_uno_penalty,int max_draw, bool must_play, char reneging) {
+  std::ifstream file("C:/Users/T PC/Desktop/Midterm 2_ Uno Starter Code/Configs/rules/Default.txt");
   std::string  line;
   std::string items;
   char space;
@@ -88,13 +95,19 @@ void Rules::readfile(int starting_hand,int uno_penalty,int bad_uno_penalty,int m
     for(auto& s: tokens)
       if (s == "Reneging"){reneging = num;}
   }
+  aStartingHand = starting_hand;
+  aUnoPenalty = uno_penalty;
+  aBadUnoPenalty = bad_uno_penalty;
+  aMaxDraw = max_draw;
+  aMustPlay = must_play;
+  aReneging = reneging;
 
   std::cout << starting_hand<<std::endl;
-  std::cout << uno_penalty<<std::endl;
-  std::cout << bad_uno_penalty<<std::endl;
-  std::cout << max_draw<<std::endl;
-  std::cout << must_play<<std::endl;
-  std::cout << reneging<<std::endl;
+//  std::cout << uno_penalty<<std::endl;
+//  std::cout << bad_uno_penalty<<std::endl;
+//  std::cout << max_draw<<std::endl;
+//  std::cout << must_play<<std::endl;
+//  std::cout << reneging<<std::endl;
 
 
 }

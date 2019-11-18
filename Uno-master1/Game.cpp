@@ -42,10 +42,10 @@ void Game::readFile(std::string fileName,int seed) {
 
 
 void Game::playGame(int seed) {
-  if(seed == NULL){
-    std::minstd_rand generator(std::chrono::system_clock::now().time_since_epoch().count());
-    std::shuffle(aDeck.begin(), aDeck.end(), generator);
-  }
+//  if(seed == NULL){
+//    std::minstd_rand generator(std::chrono::system_clock::now().time_since_epoch().count());
+//    std::shuffle(aDeck.begin(), aDeck.end(), generator);
+//  }
   std::minstd_rand generator(seed);
   std::shuffle(aDeck.begin(), aDeck.end(), generator);
   std::vector<Card> playerHand;
@@ -63,8 +63,9 @@ void Game::playGame(int seed) {
     aPlayers.push_back(player);
   }
   std::cin.ignore();
+  Rules startingHand;
   for (int i = 0; i < aPlayers.size(); i++) {
-    for (int j = 0; j < 7; j++) {
+    for (int j = 0; j < startingHand.startingHandSize(); j++) {
       playerHand.push_back(aDeck.at(j));
     }
     aDeck.erase(aDeck.begin(), aDeck.begin() + 7);

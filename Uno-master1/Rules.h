@@ -13,17 +13,25 @@
 #include <istream>
 
 class Rules {
+ private:
+  int aStartingHand;
+  int aUnoPenalty;
+  int aBadUnoPenalty;
+  int aMaxDraw;
+  char aMustPlay;
+  char aReneging;
+
  public:
   Rules();
-  static void readfile(int starting_hand =0 , int uno_penalty= 0, int bad_uno_penalty= 0, int max_draw=0, char must_play=0, char reneging=0);
-  int startingHandSize(int starting_hand);
-  int unoCallOutPenalty(int uno_penalty);
-  int badUnoCalloutPenalty(int bad_uno_penalty);
-  int drawLimit(int max_draw);
+  void readfile(int starting_hand =0 , int uno_penalty= 0, int bad_uno_penalty= 0, int max_draw=0, bool must_play=true, char reneging=true);
+  int startingHandSize();
+  int unoCallOutPenalty();
+  int badUnoCalloutPenalty();
+  int drawLimit();
 //
 //    enum level { mustPlayenum , renegingenum};
-  int mustPlayCardEachTurn(char must_play);
-  int renegingFunction(char reneging);
+  bool mustPlayCardEachTurn();
+  bool renegingFunction();
 
 
 
