@@ -1,9 +1,9 @@
+////
+//// Created by T Alpha 1 on 11/2/2019.
+////
 //
-// Created by T Alpha 1 on 11/2/2019.
+//#include "Rules.h"
 //
-
-#include "Rules.h"
-
 //int Rules::startingHandSize(int starting_hand) {
 //  return starting_hand;}
 //
@@ -54,7 +54,7 @@
 //}
 //
 //void Rules::readfile(int starting_hand,int uno_penalty,int bad_uno_penalty,int max_draw, char must_play, char reneging) {
-//  std::ifstream file("/Users/rayngan/desktop/Midterm2/Configs/rules/Default.txt");
+//  std::ifstream file("C:/Users/T PC/Desktop/Midterm 2_ Uno Starter Code/Configs/rules/Default.txt");
 //  std::string  line;
 //  std::string items;
 //  char space;

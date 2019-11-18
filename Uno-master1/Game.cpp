@@ -10,14 +10,14 @@
 Game::Game(){
 }
 
-void Game::readFile() {
+void Game::readFile(std::string fileName,int seed) {
   Card card(0,"blank");
   std::vector<Card> cards;
   Deck deck(0,cards);
   int numCards;
   int value;
   std::string color;
-  std::ifstream file("C:/Users/T PC/Desktop/Midterm 2_ Uno Starter Code/Configs/Decks/Regular.txt");
+  std::ifstream file(fileName);
   std::string line;
   while (getline(file, line)) {
     file >> std::ws;
@@ -33,7 +33,7 @@ void Game::readFile() {
     }
   }
   aDeck = deck.getDeck();
-  playGame();
+  playGame(seed);
 //    for (int i = 0; i < deck.getDeck().size(); i++) {
 //        std::cout << deck.getDeck().at(i).getColor() << " "
 //                  << deck.getDeck().at(i).getValue()  << std::endl;
@@ -41,16 +41,20 @@ void Game::readFile() {
 }
 
 
-void Game::playGame() {
-//  std::minstd_rand generator(std::chrono::system_clock::now().time_since_epoch().count());
-//  std::shuffle(deck.begin(), deck.end(), generator);
+void Game::playGame(int seed) {
+  if(seed == NULL){
+    std::minstd_rand generator(std::chrono::system_clock::now().time_since_epoch().count());
+    std::shuffle(aDeck.begin(), aDeck.end(), generator);
+  }
+  std::minstd_rand generator(seed);
+  std::shuffle(aDeck.begin(), aDeck.end(), generator);
   std::vector<Card> playerHand;
   std::vector<Card> discardedCards;
   Player player(" ", 0, playerHand);
   int numPlayers;
   std::string playerName;
   auto discard = DiscardPile(discardedCards);
-  std::cout << "Enter the number of players you want: ";
+  std::cout << "Enter the number of players in the game: ";
   std::cin >> numPlayers;
   for (int i = 0; i < numPlayers; i++) {
     std::cout << "Player " << i + 1 << " enter your name: ";
@@ -83,14 +87,34 @@ void Game::playGame() {
   int value;
   Card card(0, "blank");
   bool cardExists;
+  std::string callout;
   for (int j = 0; j < 3; j++) {
     for (int i = 0; i < aPlayers.size(); i++) {
       cardExists = false;
       while (cardExists == false) {
 
+
+
+
+        for (int x = 0; x < aPlayers.size(); x++){
+          if(x!= i) {
+            std::cout << aPlayers.at(x).getPlayerName() << ": ";
+            for (int u = 0; u < aPlayers.at(x).getHand().size(); u++) {
+
+              std::cout << aPlayers.at(x).getHand().at(u).getColor() << " "
+                        << aPlayers.at(x).getHand().at(u).getValue() << ", ";
+              if (u == aPlayers.at(x).getHand().size() - 1) {
+                std::cout << "\n";
+              }
+            }
+          }
+        }
+
+
+
         std::cout << "Top of discard pile: " << aDiscardPile.at(aDiscardPile.size() - 1).getColor() << " "
                   << aDiscardPile.at(aDiscardPile.size() - 1).getValue() << std::endl;
-        std::cout << "You hand: ";
+        std::cout << "Your hand: ";
         for (int j = 0; j < aPlayers.at(i).getHand().size(); j++) {
           std::cout << aPlayers.at(i).getHand().at(j).getColor() << " " << aPlayers.at(i).getHand().at(j).getValue()
                     << ", ";
@@ -98,10 +122,10 @@ void Game::playGame() {
             std::cout << "\n";
           }
         }
-        std::cout << aPlayers.at(i).getPlayerName() << ", enter your move or h for help: ";
+        std::cout << aPlayers.at(i).getPlayerName() << ", enter your move, or h for help: ";
         std::getline(std::cin, playerResponse);
         std::stringstream ss(playerResponse);
-        while (ss >> move >> color >> value) {
+        while (ss >> move >> color >> value >> callout) {
           card = Card(value, color);
         }
 
@@ -111,9 +135,16 @@ void Game::playGame() {
             if(uno(aPlayers.at(i).getPlayerName())==false){
               std::cout << "You had to draw 3 cards for a bad UNO call." << std::endl;
             }
+            else{
+              std::cout << aPlayers.at(i).getPlayerName() << " shouted Uno" << std::endl;
+            }
           }
-          else {
+          else if(shortFormInput(callout,"uno")){
             cardExists = playCard(aPlayers.at(i), card);
+            if(uno(aPlayers.at(i).getPlayerName())==false){
+              std::cout << "You had to draw 3 cards for a bad UNO call." << std::endl;
+            }
+
           }
         }
 
@@ -150,6 +181,7 @@ bool Game::playCard(Player& player, Card card) {
   bool cardExists = false;
     auto cardToRemove = std::find(player.getHand().begin(), player.getHand().end(), card);
     if(cardToRemove != player.getHand().end() && (*cardToRemove).canPlay(aDiscardPile.at(aDiscardPile.size() - 1))){
+      std::cout << player.getPlayerName() << " played " << (*cardToRemove).getColor() << " " << (*cardToRemove).getValue() << std::endl;
       aDiscardPile.push_back(*cardToRemove);
       player.getHand().erase(cardToRemove);
       return  true;

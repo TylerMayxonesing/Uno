@@ -36,8 +36,8 @@ class Game{
  public:
   Game();
   //~Game();
-  void readFile();
-  void playGame();
+  void readFile(std::string,int);
+  void playGame(int);
   bool playCard(Player& player, Card card);
   void draw(Player& player);
   bool uno(std::string);
