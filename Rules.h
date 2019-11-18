@@ -1,28 +1,29 @@
 //
-// Created by Ray Ngan on 11/2/19.
+// Created by T Alpha 1 on 11/2/2019.
 //
+
+#ifndef UNO__RULES_H_
+#define UNO__RULES_H_
+
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <vector>
-
-#ifndef UNO_RULES_H
-#define UNO_RULES_H
-
+#include <istream>
 
 class Rules {
-public:
-    Rules();
-    static void readfile(int starting_hand,int uno_penalty,int bad_uno_penalty,int max_draw, char must_play, char reneging);
-    static int startingHandSize(int starting_hand);
-    static int unoCallOutPenalty(int uno_penalty);
-    static int badUnoCalloutPenalty(int bad_uno_penalty);
-    static int drawLimit(int max_draw);
+ public:
+  Rules();
+   static void readfile(int starting_hand =0 , int uno_penalty= 0, int bad_uno_penalty= 0, int max_draw=0, char must_play=0, char reneging=0);
+   int startingHandSize(int starting_hand);
+  int unoCallOutPenalty(int uno_penalty);
+   int badUnoCalloutPenalty(int bad_uno_penalty);
+  int drawLimit(int max_draw);
 //
 //    enum level { mustPlayenum , renegingenum};
-    static int mustPlayCardEachTurn(char must_play);
-    static int renegingFunction(char reneging);
+   int mustPlayCardEachTurn(char must_play);
+   int renegingFunction(char reneging);
 
 
 
@@ -30,4 +31,4 @@ public:
 };
 
 
-#endif //UNO_RULES_H
+#endif //UNO__RULES_H_
