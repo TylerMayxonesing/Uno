@@ -13,3 +13,4 @@ add_executable(Uno main.cpp Card.cpp Card.h
         Player.cpp Player.h
         Rules.cpp Rules.h
         StringMethods.cpp StringMethods.h)
+add_compile_options(Uno PRIVATE -Wall -Werror)

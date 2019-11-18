@@ -67,7 +67,7 @@ void Rules::readfile(std::string filesName) {
   int max_draw;
   char must_play;
   char reneging;
-  std::ifstream file("C:/Users/T PC/Desktop/Midterm 2_ Uno Starter Code/Configs/rules/Default.txt");
+  std::ifstream file(filesName);
   std::string  line;
   std::string items;
   char space;

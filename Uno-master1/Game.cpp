@@ -72,6 +72,7 @@ void Game::playGame(std::string seed) {
   int numPlayers;
   std::string playerName;
   auto discard = DiscardPile(discardedCards);
+
   std::cout << "Enter the number of players in the game: ";
   std::cin >> numPlayers;
   for (int i = 0; i < numPlayers; i++) {
@@ -80,15 +81,17 @@ void Game::playGame(std::string seed) {
     player = Player(playerName, 0, playerHand);
     aPlayers.push_back(player);
   }
+  std::cout << "\n";
   std::cin.ignore();
+
 
   for (int i = 0; i < aPlayers.size(); i++) {
     for (int j = 0; j < aRules.startingHandSize(); j++) {
       playerHand.push_back(aDeck.at(j));
     }
-    aDeck.erase(aDeck.begin(), aDeck.begin() + 7);
+    aDeck.erase(aDeck.begin(), aDeck.begin() + aRules.startingHandSize());
     aPlayers.at(i).setPlayerHand(playerHand);
-    playerHand.erase(playerHand.begin(), playerHand.begin() + 7);
+    playerHand.erase(playerHand.begin(), playerHand.begin() + aRules.startingHandSize());
   }
   for (int i = 0; i < 1; i++) {
     discardedCards.push_back(aDeck.at(i));
@@ -215,7 +218,7 @@ bool Game::playCard(Player& player, const Card& card) {
         return true;
       }
       else{
-        std::cout << "You can't play this the card. The color or numbers have to the be the same." << std::endl;
+        std::cout << "You can't play this card. The color or numbers have to the be the same." << std::endl;
         return false;
       }
     }
@@ -268,13 +271,13 @@ bool Game::unoCalledOn(std::string& playerName, Player& playerThatCalledUnoOnSom
 
 
 bool Game::selfUnoCallout(Player& playerName) {
-  if(playerName.getHand().size()<=2) {
-    for (int i = 0; i < aRules.unoCallOutPenalty(); i++) {
-      draw(playerName);
+  if(playerName.getHand().size()<= 2) {
       return true;
-    }
   }
   else{
+    for (int i = 0; i < aRules.unoCallOutPenalty(); i++) {
+      draw(playerName);
+    }
     std::cout<< "You can't call UNO unless playing your second to last card." << std::endl;
     return false;
   }
