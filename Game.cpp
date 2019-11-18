@@ -112,9 +112,9 @@ void Game::playGame() {
         cardExists = false;
         while (cardExists == false) {
 
-                for (int x = 0; x < aPlayers.size(); x++){
-                    if(x!= i) {
-                        std::cout << aPlayers.at(x).getPlayerName() << ":";
+            for (int x = 0; x < aPlayers.size(); x++){
+                if(x!= i) {
+                    std::cout << aPlayers.at(x).getPlayerName() << ":";
                         for (int u = 0; u < aPlayers.at(x).getHand().size(); u++) {
 
                             std::cout << aPlayers.at(x).getHand().at(u).getColor() << " "
@@ -123,11 +123,8 @@ void Game::playGame() {
                                 std::cout << "\n";
                             }
                         }
-                    }
                 }
-
-
-
+            }
 
             std::cout << "Top of discard pile: " << aDiscardPile.at(aDiscardPile.size() - 1).getColor() << " "
                       << aDiscardPile.at(aDiscardPile.size() - 1).getValue() << std::endl;
