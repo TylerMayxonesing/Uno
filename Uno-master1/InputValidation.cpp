@@ -16,3 +16,12 @@ bool shortFormInput(std::string shortInput, std::string longInput){
   }
 }
 
+bool isInt(std::string number){
+  if(stoi(number)*0 == 0){
+  return true;
+}
+  else{
+  return false;
+  }
+}
+

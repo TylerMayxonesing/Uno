@@ -20,7 +20,7 @@ std::string Move::moveType()const{
   if(shortFormInput(aPlayerMove,"skip")){
     return "skip";
   }
-  else if(shortFormInput(aPlayerMove,"play") && aCallout == " "){
+  else if(shortFormInput(aPlayerMove,"play") && aCallout == " " && isInt(aValue)){
    return "play";
   }
 
@@ -34,11 +34,14 @@ std::string Move::moveType()const{
     return "uno";
   }
 
-  else if(shortFormInput(aPlayerMove,"quit")){
+  else if(shortFormInput(aPlayerMove,"quit") ){
     exit(0);
   }
   else if(shortFormInput(aPlayerMove,"help")){
     return  "help";
+  }
+  else{
+    return "unknown";
   }
 }
 

@@ -10,8 +10,7 @@
 #include "StringMethods.h"
 
 bool shortFormInput(std::string, std::string);
-
-
+bool isInt(std::string);
 
 
 #endif //UNO__INPUTVALIDATION_H_

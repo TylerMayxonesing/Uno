@@ -10,7 +10,7 @@
 Game::Game(){
 }
 
-void Game::readFile(std::string fileName, std::string rulesFile, int seed) {
+void Game::readFile(std::string fileName, std::string rulesFile, std::string seed) {
   Card card(0,"blank");
   std::vector<Card> cards;
   Deck deck(0,cards);
@@ -33,6 +33,7 @@ void Game::readFile(std::string fileName, std::string rulesFile, int seed) {
     }
   }
   aDeck = deck.getDeck();
+  allExistingCards = deck.getDeck();
   Rules rules;
   rules.readfile(rulesFile);
   setRules(rules);
@@ -47,17 +48,24 @@ void Game::readFile(std::string fileName, std::string rulesFile, int seed) {
 void Game::setRules(Rules rules){
   aRules = rules;
 }
+bool Game::endGame(std::vector<Card>& playerHands){
+  if(playerHands.size() == 0){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
 
-
-
-void Game::playGame(int seed) {
-//  if(seed == NULL){
-//    std::minstd_rand generator(std::chrono::system_clock::now().time_since_epoch().count());
-//    std::shuffle(aDeck.begin(), aDeck.end(), generator);
-//  }
-
-//  std::minstd_rand generator(seed);
-//  std::shuffle(aDeck.begin(), aDeck.end(), generator);
+void Game::playGame(std::string seed) {
+  if(seed.empty()){
+    std::minstd_rand generator(std::chrono::system_clock::now().time_since_epoch().count());
+    std::shuffle(aDeck.begin(), aDeck.end(), generator);
+  }
+  else {
+  std::minstd_rand generator(stoi(seed));
+  std::shuffle(aDeck.begin(), aDeck.end(), generator);
+  }
   std::vector<Card> playerHand;
   std::vector<Card> discardedCards;
   Player player(" ", 0, playerHand);
@@ -93,18 +101,19 @@ void Game::playGame(int seed) {
   bool cardExists;
 
 
-  for (int j = 0; j < 8; j++) {
+bool endOfGame = false;
+  while(endOfGame == false) {
     for (int i = 0; i < aPlayers.size(); i++) {
-      std::string playerResponse;
-      std::string move = " ";
-      std::string color = " ";
-      std::string value =" ";
-      Card card(0, "blank");
-      std::string callout= " ";
-      Move playerMove(move,color,value,callout);
       cardExists = false;
       int drawLimit = 0;
       while (cardExists == false) {
+        std::string playerResponse;
+        std::string move = " ";
+        std::string color = " ";
+        std::string value =" ";
+        Card card(0, "blank");
+        std::string callout= " ";
+        Move playerMove(move,color,value,callout);
 
 
 
@@ -133,75 +142,97 @@ void Game::playGame(int seed) {
             std::cout << "\n";
           }
         }
-        std::cout << aPlayers.at(i).getPlayerName() << ", enter your move, or h for help: ";
-        std::getline(std::cin, playerResponse);
-        std::stringstream ss(playerResponse);
-        while (ss >> move >> color >> value >> callout) {
-        }
 
-        playerMove = Move(move, color, value, callout);
-        std::cout <<"Actual move: " << move <<std::endl;
-        std::cout <<"Actual color: " << color <<std::endl;
-        std::cout <<"Actual value: " << value <<std::endl;
-        std::cout <<"Actual callout: " << callout <<std::endl;
-        std::cout << "Move Type: " << playerMove.moveType() << std::endl;
-        if (playerMove.moveType() == "play") {
-          card = Card(stoi(value), color);
-          cardExists = playCard(aPlayers.at(i),card);
+          std::cout << aPlayers.at(i).getPlayerName() << ", enter your move, or h for help: ";
+          std::getline(std::cin, playerResponse);
+          std::stringstream ss(playerResponse);
+          while (ss >> move >> color >> value >> callout) {
+          }
 
-        }
 
-        else if (playerMove.moveType() == "draw") {
-          draw(aPlayers.at(i));
-          cardExists = false;
-        }
-        else if (playerMove.moveType() == "selfCallout"){
-          playCard(aPlayers.at(i),card);
-          cardExists = selfUnoCallout(aPlayers.at(i));
-        }
-        else if (playerMove.moveType() == "uno"){
-          cardExists = unoCalledOn(color, aPlayers.at(i));
-        }
-        else if (playerMove.moveType() == "skip"){
-          cardExists = true;
-        }
-        else if(playerMove.moveType() == "help"){
-          std::cout << "- play card_color card_value [uno]\n"
-                       "- draw\n"
-                       "- uno player_name\n"
-                       "- skip\n"
-                       "- quit\n"
-                       "- help" << std::endl;
-          cardExists = false;
-        }
-        drawLimit++;
-        if(drawLimit> aRules.drawLimit()){
-          break;
-        }
+          playerMove = Move(move, color, value, callout);
+
+          if (playerMove.moveType() == "play") {
+            card = Card(stoi(value), color);
+            cardExists = playCard(aPlayers.at(i), card);
+
+          } else if (playerMove.moveType() == "draw") {
+            if (drawLimit < aRules.drawLimit()) {
+              draw(aPlayers.at(i));
+              drawLimit++;
+              cardExists = false;
+            } else {
+              std::cout << "You have already drawn the maximum number of cards this round." << std::endl;
+            }
+          } else if (playerMove.moveType() == "selfCallout") {
+            playCard(aPlayers.at(i), card);
+            cardExists = selfUnoCallout(aPlayers.at(i));
+          } else if (playerMove.moveType() == "uno") {
+            cardExists = unoCalledOn(color, aPlayers.at(i));
+          } else if (playerMove.moveType() == "skip") {
+            if (aRules.mustPlayCardEachTurn() == false) {
+              cardExists = true;
+            } else if (aRules.mustPlayCardEachTurn() == true) {
+              std::cout << "You cannot pass. You must play a card this turn." << std::endl;
+              cardExists = false;
+            }
+          } else if (playerMove.moveType() == "help") {
+            std::cout << "- play card_color card_value [uno]\n"
+                         "- draw\n"
+                         "- uno player_name\n"
+                         "- skip\n"
+                         "- quit\n"
+                         "- help" << std::endl;
+            cardExists = false;
+          }
+          else if (playerMove.moveType() == "unknown"){
+            std::cout << "Unknown command entered." << std::endl;
+            cardExists = false;
+          }
+
 
       }
+      endOfGame = endGame(aPlayers.at(i).getHand());
     }
 
+  }
+
+  std::cout<< "==== Leader Board ====" << std::endl;
+  for (int i = 0 ; i < aPlayers.size(); i++){
+    std::cout << i <<".) " << aPlayers.at(i).getPlayerName()<<std::endl;
   }
 }
 
 bool Game::playCard(Player& player, const Card& card) {
-    auto cardToRemove = std::find(player.getHand().begin(), player.getHand().end(), card);
-    if(cardToRemove != player.getHand().end() && (*cardToRemove).canPlay(aDiscardPile.at(aDiscardPile.size() - 1))){
-      std::cout << player.getPlayerName() << " played " << (*cardToRemove).getColor() << " " << (*cardToRemove).getValue() << std::endl;
-      aDiscardPile.push_back(*cardToRemove);
-      player.getHand().erase(cardToRemove);
-      return  true;
+  auto cardToRemove = std::find(player.getHand().begin(), player.getHand().end(), card);
+  auto existingCard = std::find(allExistingCards.begin(), allExistingCards.end(), card);
+    if(cardToRemove != player.getHand().end()){
+      if((*cardToRemove).canPlay(aDiscardPile.at(aDiscardPile.size() - 1))) {
+        std::cout << player.getPlayerName() << " played " << (*cardToRemove).getColor() << " "
+                  << (*cardToRemove).getValue() << std::endl;
+        aDiscardPile.push_back(*cardToRemove);
+        player.getHand().erase(cardToRemove);
+        return true;
+      }
+      else{
+        std::cout << "You can't play this the card. The color or numbers have to the be the same." << std::endl;
+        return false;
+      }
     }
-    else {
-      std::cout << "You can't play a " << card.getColor() << " " << card.getValue() << " because your aren't holding one." << std::endl;
+    else if(cardToRemove == player.getHand().end() && existingCard != allExistingCards.end()) {
+      std::cout << "You can't play a " << (*existingCard).getColor() << " " << (*existingCard).getValue() << " because your aren't holding one." << std::endl;
       return false;
     }
 
 }
 
 void Game::draw(Player& player) {
+  if(aDrawPile.empty()){
+    std::cout << "There are no cards left to draw. Please play a card." << std::endl;
+  }
+  else{
   player.getHand().push_back(aDrawPile.at(aDrawPile.size()-1));
+  }
 }
 
 
