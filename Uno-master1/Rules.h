@@ -15,15 +15,15 @@
 class Rules {
  public:
   Rules();
-  static void readfile(int starting_hand,int uno_penalty,int bad_uno_penalty,int max_draw, char must_play, char reneging);
-  static int startingHandSize(int starting_hand);
-  static int unoCallOutPenalty(int uno_penalty);
-  static int badUnoCalloutPenalty(int bad_uno_penalty);
-  static int drawLimit(int max_draw);
+  static void readfile(int starting_hand =0 , int uno_penalty= 0, int bad_uno_penalty= 0, int max_draw=0, char must_play=0, char reneging=0);
+  int startingHandSize(int starting_hand);
+  int unoCallOutPenalty(int uno_penalty);
+  int badUnoCalloutPenalty(int bad_uno_penalty);
+  int drawLimit(int max_draw);
 //
 //    enum level { mustPlayenum , renegingenum};
-  static int mustPlayCardEachTurn(char must_play);
-  static int renegingFunction(char reneging);
+  int mustPlayCardEachTurn(char must_play);
+  int renegingFunction(char reneging);
 
 
 

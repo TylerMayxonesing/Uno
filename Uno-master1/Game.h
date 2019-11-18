@@ -20,6 +20,7 @@
 #include <functional>
 #include "InputValidation.h"
 #include "Move.h"
+#include "Rules.h"
 
 //std::vector<Card> readFile();
 
