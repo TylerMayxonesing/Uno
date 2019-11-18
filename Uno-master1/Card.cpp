@@ -28,12 +28,13 @@ void Card::setColor(std::string color){
 
 
 bool Card::operator== (const Card &rhs) const{
-  if (((*this).getValue()== rhs.getValue() &&
-      (*this).getColor()== rhs.getColor())) {
+  if ((*this).getValue()== rhs.getValue() && (
+      shortFormInput((*this).getColor(),rhs.getColor())
+      || shortFormInput(rhs.getColor(),(*this).getColor())) ){
     return true;
   }
   else if ((*this).getValue()!= rhs.getValue() ||
-      (*this).getColor()!= rhs.getColor()){
+      !shortFormInput((*this).getColor(),rhs.getColor())){
     return false;
   }
 }
@@ -42,12 +43,22 @@ bool Card::operator!= (const Card &rhs) const
 {
   return !(*this == rhs);
 }
+//
+//bool Card::matches(const Card& card){
+//  if(*this==card){
+//    return true;
+//  }
+//  else{
+//    return false;
+//  }
+//}
 
-bool Card::matches(const Card& card){
-  if(*this==card){
+bool Card::canPlay(const Card& card2) {
+  if(shortFormInput((*this).getColor(), card2.getColor())
+  || (*this).getValue() == card2.getValue()){
     return true;
   }
-  else{
+  else {
     return false;
   }
 }

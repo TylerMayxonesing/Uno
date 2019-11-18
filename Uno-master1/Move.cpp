@@ -26,18 +26,16 @@ std::string Move::moveType(){
     return "draw";
   }
   if(shortFormInput(aPlayerMove,"uno")){
-    std::cout << "uno" << std::endl;
+    return "uno";
+  }
+  if(shortFormInput(aPlayerMove,"skip")){
+    return "skip";
   }
   if(shortFormInput(aPlayerMove,"quit")){
     exit(0);
   }
   if(shortFormInput(aPlayerMove,"help")){
-    std::cout << "- play card_color card_value [uno]\n"
-                 "- draw\n"
-                 "- uno player_name\n"
-                 "- skip\n"
-                 "- quit\n"
-                 "- help" << std::endl;
+    return  "help";
   }
 }
 

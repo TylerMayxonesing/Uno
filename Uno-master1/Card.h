@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include "InputValidation.h"
 
 
 
@@ -25,6 +26,7 @@ class Card {
   bool operator==(const Card &) const;
   bool operator!=(const Card &) const;
   bool matches(const Card& card);
+  bool canPlay(const Card&);
 };
 
 

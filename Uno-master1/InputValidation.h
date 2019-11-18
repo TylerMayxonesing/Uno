@@ -10,7 +10,6 @@
 #include "StringMethods.h"
 
 bool shortFormInput(std::string, std::string);
-//Player playCard(Player );
 
 
 

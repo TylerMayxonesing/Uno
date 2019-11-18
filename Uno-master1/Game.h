@@ -38,8 +38,9 @@ class Game{
   //~Game();
   void readFile();
   void playGame();
-  bool playCard(Player& player, Card);
+  bool playCard(Player& player, Card card);
   void draw(Player& player);
+  bool uno(std::string);
 
 
 };
