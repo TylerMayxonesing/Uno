@@ -2,7 +2,6 @@
 #include "Game.h"
 #include "InputValidation.h"
 int main(int argc, char** argv) {
-  //readFile();
-  Game().readFile("C:/Users/T PC/Desktop/Midterm 2_ Uno Starter Code/Configs/Decks/Regular.txt",2);
+  Game().readFile(argv[1], argv[2], atoi(argv[3]));
   return 0;
 }

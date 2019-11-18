@@ -13,4 +13,5 @@ bool shortFormInput(std::string, std::string);
 
 
 
+
 #endif //UNO__INPUTVALIDATION_H_

@@ -41,4 +41,3 @@ void Player::discardCardToDiscardPile(Card card){
     aPlayerHand.erase(found);
   }
 }
-

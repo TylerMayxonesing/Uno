@@ -3,38 +3,41 @@
 //
 
 #include "Move.h"
-#include "InputValidation.h"
-#include "Game.h"
 
-Move::Move(std::string playerMove){
+
+Move::Move(const std::string& playerMove, const std::string& color, const std::string& value, const std::string& callout ){
   aPlayerMove = playerMove;
+  aColor = color;
+  aValue = value;
+  aCallout = callout;
 }
 
-std::string Move::getMove() {
-  return aPlayerMove;
-}
 
-void Move::setMove(std::string playerMove) {
-  aPlayerMove = playerMove;
-}
 
-std::string Move::moveType(){
-  if(shortFormInput(aPlayerMove,"play")){
-   return "play";
-  }
-  if(shortFormInput(aPlayerMove,"draw")){
-    return "draw";
-  }
-  if(shortFormInput(aPlayerMove,"uno")){
-    return "uno";
-  }
+
+std::string Move::moveType()const{
+
   if(shortFormInput(aPlayerMove,"skip")){
     return "skip";
   }
-  if(shortFormInput(aPlayerMove,"quit")){
+  else if(shortFormInput(aPlayerMove,"play") && aCallout == " "){
+   return "play";
+  }
+
+  else if(shortFormInput(aPlayerMove,"draw")){
+    return "draw";
+  }
+  else if(shortFormInput(aPlayerMove,"play") && shortFormInput(aCallout,"uno")){
+    return "selfCallout";
+  }
+  else if(shortFormInput(aPlayerMove,"uno")){
+    return "uno";
+  }
+
+  else if(shortFormInput(aPlayerMove,"quit")){
     exit(0);
   }
-  if(shortFormInput(aPlayerMove,"help")){
+  else if(shortFormInput(aPlayerMove,"help")){
     return  "help";
   }
 }

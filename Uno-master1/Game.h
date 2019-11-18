@@ -22,26 +22,26 @@
 #include "Move.h"
 #include "Rules.h"
 
-//std::vector<Card> readFile();
 
-//void game();
-
-//Player& playCard(Player);
 class Game{
  private:
   std::vector<Card> aDiscardPile;
   std::vector<Card> aDeck;
   std::vector<Player> aPlayers;
   std::vector <Card> aDrawPile;
+  Rules aRules;
 
  public:
   Game();
   //~Game();
-  void readFile(std::string,int);
+  void readFile(std::string, std::string, int);
   void playGame(int);
-  bool playCard(Player& player, Card card);
+  bool playCard(Player& player, const Card& card);
   void draw(Player& player);
-  bool uno(std::string);
+  bool unoCalledOn(std::string&, Player&);
+  bool selfUnoCallout(Player&);
+  void setRules(Rules);
+  Rules getRules();
 
 
 };

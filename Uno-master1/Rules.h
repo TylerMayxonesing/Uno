@@ -23,7 +23,7 @@ class Rules {
 
  public:
   Rules();
-  void readfile(int starting_hand =0 , int uno_penalty= 0, int bad_uno_penalty= 0, int max_draw=0, bool must_play=true, char reneging=true);
+  void readfile(std::string);
   int startingHandSize();
   int unoCallOutPenalty();
   int badUnoCalloutPenalty();

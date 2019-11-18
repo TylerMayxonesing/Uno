@@ -4,17 +4,21 @@
 
 #ifndef UNO__MOVE_H_
 #define UNO__MOVE_H_
-#include "Player.h"
-class Move{
- private:Card* aCard1;
- public:
-  std::string aPlayerMove;
 
-  Move(std::string playerMove);
+#include <string>
+#include "InputValidation.h"
+
+class Move{
+ private:
+  std::string aPlayerMove;
+  std::string aColor;
+  std::string aValue;
+  std::string aCallout;
+ public:
+
+  Move(const std::string&, const std::string&, const std::string&, const std::string&);
   //~Move();
-  std::string getMove();
-  void setMove(std::string playerMove);
-  std::string moveType();
+  std::string moveType()const;
 };
 
 

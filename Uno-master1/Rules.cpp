@@ -60,7 +60,13 @@ bool Rules::renegingFunction() {
 Rules::Rules(){
 
 }
-void Rules::readfile(int starting_hand,int uno_penalty,int bad_uno_penalty,int max_draw, bool must_play, char reneging) {
+void Rules::readfile(std::string filesName) {
+  int starting_hand;
+  int uno_penalty;
+  int bad_uno_penalty;
+  int max_draw;
+  char must_play;
+  char reneging;
   std::ifstream file("C:/Users/T PC/Desktop/Midterm 2_ Uno Starter Code/Configs/rules/Default.txt");
   std::string  line;
   std::string items;
@@ -102,7 +108,7 @@ void Rules::readfile(int starting_hand,int uno_penalty,int bad_uno_penalty,int m
   aMustPlay = must_play;
   aReneging = reneging;
 
-  std::cout << starting_hand<<std::endl;
+//  std::cout << starting_hand<<std::endl;
 //  std::cout << uno_penalty<<std::endl;
 //  std::cout << bad_uno_penalty<<std::endl;
 //  std::cout << max_draw<<std::endl;

@@ -22,4 +22,6 @@ bool contains(const std::string& string, char letter);
 std::vector<std::string> split(const std::string& string, const std::string& delimiter);
 
 
+
+
 #endif //UNO__STRINGMETHODS_H_
