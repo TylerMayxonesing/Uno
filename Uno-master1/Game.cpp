@@ -38,11 +38,8 @@ void Game::readFile(std::string fileName, std::string rulesFile, std::string see
   rules.readfile(rulesFile);
   setRules(rules);
 
+
   playGame(seed);
-//    for (int i = 0; i < deck.getDeck().size(); i++) {
-//        std::cout << deck.getDeck().at(i).getColor() << " "
-//                  << deck.getDeck().at(i).getValue()  << std::endl;
-//    }
 }
 
 void Game::setRules(Rules rules){
@@ -66,6 +63,10 @@ void Game::playGame(std::string seed) {
   std::minstd_rand generator(stoi(seed));
   std::shuffle(aDeck.begin(), aDeck.end(), generator);
   }
+  for (int i = 0; i < aDeck.size(); i++) {
+    std::cout << aDeck.at(i).getColor() << " "
+              << aDeck.at(i).getValue()  << std::endl;
+  }
   std::vector<Card> playerHand;
   std::vector<Card> discardedCards;
   Player player(" ", 0, playerHand);
@@ -83,16 +84,21 @@ void Game::playGame(std::string seed) {
   }
   std::cout << "\n";
   std::cin.ignore();
-
-
+int j = 0;
+while(j  < aRules.startingHandSize()){
   for (int i = 0; i < aPlayers.size(); i++) {
-    for (int j = 0; j < aRules.startingHandSize(); j++) {
-      playerHand.push_back(aDeck.at(j));
-    }
-    aDeck.erase(aDeck.begin(), aDeck.begin() + aRules.startingHandSize());
-    aPlayers.at(i).setPlayerHand(playerHand);
-    playerHand.erase(playerHand.begin(), playerHand.begin() + aRules.startingHandSize());
+    //playerHand.push_back(aDeck.at(j));
+    aPlayers.at(i).setPlayerHand(aDeck.at(aDeck.size()-1));
+
+    aDeck.erase(aDeck.end() - 1, aDeck.end());
+    //playerHand.clear();
+    std::sort(aPlayers.at(i).getHand().begin(), aPlayers.at(i).getHand().end());
   }
+  j++;
+}
+
+
+
   for (int i = 0; i < 1; i++) {
     discardedCards.push_back(aDeck.at(i));
     aDiscardPile.push_back(aDeck.at(i));

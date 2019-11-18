@@ -23,7 +23,7 @@ class Player:Hand{
 
   void setPlayerName(std::string playerName);
   void setScore(int score);
-  void setPlayerHand(std::vector<Card> playerHand);
+  void setPlayerHand(Card& playerHand);
 
   std::string getPlayerMove();
   void setPlayerMove(std::string);

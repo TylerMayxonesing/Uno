@@ -30,8 +30,8 @@ void Player::setScore(int score){
   aScore = score;
 }
 
-void Player::setPlayerHand(std::vector<Card> playerHand) {
-  aPlayerHand = playerHand;
+void Player::setPlayerHand(Card &cardsFromDeck) {
+  aPlayerHand.push_back(cardsFromDeck);
 }
 
 
