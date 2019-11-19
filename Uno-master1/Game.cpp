@@ -75,19 +75,41 @@ void Game::playGame(std::string seed) {
   int numPlayers;
   std::string playerName;
   std::cout << "Enter the number of players in the game: ";
-  //std::cin >> numPlayers;
-  for (int i = 0; i < 3; i++) {
+  std::cin >> numPlayers;
+  std::cout << "\n";
+  std::cin.ignore();
+
+  for (int i = 0; i < numPlayers; i++) {
+    bool nameValid = false;
+    while(nameValid == false){
     std::cout << "Player " << i + 1 << " enter your name: ";
     std::getline(std::cin, playerName);
-    for(int j = 0; j < playerName.size(); j++){
-      if(isspace(playerName.at(j)))
-        return false;
+    for(int j = 0; j < playerName.size(); j++) {
+      if (playerName.at(j) == ' ') {
+        nameValid = false;
+        break;
+      }
+      else {
+        nameValid = true;
+      }
+      if(i > 0){
+      for (int z = 0; z < aPlayers.size(); z++){
+        if(shortFormInput(playerName,aPlayers.at(z).getPlayerName())){
+          nameValid = false;
+          break;
+        }
+        else{
+          nameValid = true;
+        }
+      }
+      }
+    }
     }
     player = Player(playerName, 0, playerHand);
     aPlayers.push_back(player);
   }
   std::cout << "\n";
-  std::cin.ignore();
+  //std::cin.ignore();
 
 
 
