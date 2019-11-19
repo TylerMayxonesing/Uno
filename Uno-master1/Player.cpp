@@ -10,7 +10,7 @@ Player::Player (std::string playerName, int score, std::vector<Card> playerHand)
   aPlayerHand = playerHand;
 }
 
-std::string Player::getPlayerName(){
+std::string Player::getPlayerName()const{
   return aPlayerName;
 }
 
@@ -44,6 +44,9 @@ void Player::discardCardToDiscardPile(Card card){
 
 bool Player::operator<(const Player& player)const{
   if((*this).getScore() < player.getScore()){
+    return true;
+  }
+  else if((*this).getScore() == player.getScore() && (*this).getPlayerName() < player.getPlayerName()){
     return true;
   }
   else{

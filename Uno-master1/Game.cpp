@@ -76,7 +76,6 @@ void Game::playGame(std::string seed) {
   std::string playerName;
   std::cout << "Enter the number of players in the game: ";
   std::cin >> numPlayers;
-  std::cout << "\n";
   std::cin.ignore();
 
   for (int i = 0; i < numPlayers; i++) {
@@ -189,57 +188,63 @@ bool endOfGame = false;
           }
         }
 
-          std::cout << aPlayers.at(i).getPlayerName() << ", enter your move or h for help: ";
-          std::getline(std::cin, playerResponse);
-          std::stringstream ss(playerResponse);
-          while (ss >> move >> color >> value >> callout) {
-          }
+        std::cout << aPlayers.at(i).getPlayerName() << ", enter your move or h for help: ";
+        std::getline(std::cin, playerResponse);
+        std::stringstream ss(playerResponse);
+        while (ss >> move >> color >> value >> callout) {
+        }
 
 
-          playerMove = Move(move, color, value, callout);
+        playerMove = Move(move, color, value, callout);
 
-          if (playerMove.moveType() == "play") {
+        if (playerMove.moveType() == "play") {
+          if(isInt(value)) {
             card = Card(stoi(value), color);
             cardExists = playCard(aPlayers.at(i), card);
-
-          } else if (playerMove.moveType() == "draw") {
-            if (drawLimit < aRules.drawLimit()) {
-              draw(aPlayers.at(i));
-              drawLimit++;
-              cardExists = false;
-            } else {
-              std::cout << "You have already drawn the maximum number of cards this round." << std::endl;
-            }
-          } else if (playerMove.moveType() == "selfCallout") {
-            playCard(aPlayers.at(i), card);
-            cardExists = selfUnoCallout(aPlayers.at(i));
-          } else if (playerMove.moveType() == "uno") {
-            cardExists = unoCalledOn(color, aPlayers.at(i));
-          } else if (playerMove.moveType() == "skip") {
-            if (aRules.mustPlayCardEachTurn() == false) {
-              cardExists = true;
-            } else if (aRules.mustPlayCardEachTurn() == true) {
-              std::cout << "You cannot pass. You must play a card this turn." << std::endl;
-              cardExists = false;
-            }
-          } else if (playerMove.moveType() == "help") {
-            std::cout << "- play card_color card_value [uno]\n"
-                         "- draw\n"
-                         "- uno player_name\n"
-                         "- skip\n"
-                         "- quit\n"
-                         "- help" << std::endl;
+          }
+          else{
+            std::cout << "Unknown command entered."<< std::endl;
             cardExists = false;
           }
-          else if(playerMove.moveType() == "quit"){
-            leaderBoard();
-            exit(0);
 
+        } else if (playerMove.moveType() == "draw") {
+          if (drawLimit < aRules.drawLimit()) {
+            draw(aPlayers.at(i));
+            drawLimit++;
+            cardExists = false;
+          } else {
+            std::cout << "You have already drawn the maximum number of cards this round." << std::endl;
           }
-          else if (playerMove.moveType() == "unknown"){
-            std::cout << "Unknown command entered." << std::endl;
+        } else if (playerMove.moveType() == "selfCallout") {
+          playCard(aPlayers.at(i), card);
+          cardExists = selfUnoCallout(aPlayers.at(i));
+        } else if (playerMove.moveType() == "uno") {
+          cardExists = unoCalledOn(color, aPlayers.at(i));
+        } else if (playerMove.moveType() == "skip") {
+          if (aRules.mustPlayCardEachTurn() == false) {
+            cardExists = true;
+          } else if (aRules.mustPlayCardEachTurn() == true) {
+            std::cout << "You cannot pass. You must play a card this turn." << std::endl;
             cardExists = false;
           }
+        } else if (playerMove.moveType() == "help") {
+          std::cout << "\t- play card_color card_value [uno]\n"
+                       "\t- draw\n"
+                       "\t- uno player_name\n"
+                       "\t- skip\n"
+                       "\t- quit\n"
+                       "\t- help" << std::endl;
+          cardExists = false;
+        }
+        else if(playerMove.moveType() == "quit"){
+          leaderBoard();
+          exit(0);
+
+        }
+        else if (playerMove.moveType() == "unknown"){
+          std::cout << "Unknown command entered." << std::endl;
+          cardExists = false;
+        }
 
 
       }
@@ -255,23 +260,23 @@ bool endOfGame = false;
 bool Game::playCard(Player& player, const Card& card) {
   auto cardToRemove = std::find(player.getHand().begin(), player.getHand().end(), card);
   auto existingCard = std::find(allExistingCards.begin(), allExistingCards.end(), card);
-    if(cardToRemove != player.getHand().end()){
-      if((*cardToRemove).canPlay(aDiscardPile.at(aDiscardPile.size() - 1))) {
-        std::cout << player.getPlayerName() << " played " << (*cardToRemove).getColor() << " "
-                  << (*cardToRemove).getValue() << "." << std::endl;
-        aDiscardPile.push_back(*cardToRemove);
-        player.getHand().erase(cardToRemove);
-        return true;
-      }
-      else{
-        std::cout << "You can't play this card. The color or numbers have to the be the same." << std::endl;
-        return false;
-      }
+  if(cardToRemove != player.getHand().end()){
+    if((*cardToRemove).canPlay(aDiscardPile.at(aDiscardPile.size() - 1))) {
+      std::cout << player.getPlayerName() << " played " << (*cardToRemove).getColor() << " "
+                << (*cardToRemove).getValue() << "." << std::endl;
+      aDiscardPile.push_back(*cardToRemove);
+      player.getHand().erase(cardToRemove);
+      return true;
     }
-    else if(cardToRemove == player.getHand().end()) {
-      std::cout << "You can't play a " << card.getColor() << " " << card.getValue() << " because your aren't holding one." << std::endl;
+    else{
+      std::cout << "You can't play this card. The color or numbers have to the be the same." << std::endl;
       return false;
     }
+  }
+  else if(cardToRemove == player.getHand().end()) {
+    std::cout << "You can't play a " << card.getColor() << " " << card.getValue() << " because your aren't holding one." << std::endl;
+    return false;
+  }
 
 }
 
@@ -280,8 +285,8 @@ void Game::draw(Player& player) {
     std::cout << "There are no cards left to draw. Please play a card." << std::endl;
   }
   else{
-  player.getHand().push_back(aDrawPile.at(aDrawPile.size()-1));
-  sort(player.getHand().begin(), player.getHand().end());
+    player.getHand().push_back(aDrawPile.at(aDrawPile.size()-1));
+    sort(player.getHand().begin(), player.getHand().end());
   }
 }
 
@@ -312,6 +317,10 @@ bool Game::unoCalledOn(std::string& playerName, Player& playerThatCalledUnoOnSom
         return true;
       }
     }
+    else{
+      std::cout << playerName << " is not in the game."<<std::endl;
+      return false;
+    }
 
   }
 }
@@ -319,7 +328,8 @@ bool Game::unoCalledOn(std::string& playerName, Player& playerThatCalledUnoOnSom
 
 bool Game::selfUnoCallout(Player& playerName) {
   if(playerName.getHand().size()<= 2) {
-      return true;
+    std::cout << playerName.getPlayerName() << " shouted UNO" << std::endl;
+    return true;
   }
   else{
     for (int i = 0; i < aRules.unoCallOutPenalty(); i++) {

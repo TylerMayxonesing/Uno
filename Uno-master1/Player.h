@@ -16,7 +16,7 @@ class Player:Hand{
   Player(std::string playerName, int score, std::vector<Card> playerHand);
   //~Player();
 
-  std::string getPlayerName();
+  std::string getPlayerName()const;
   int getScore()const;
   std::vector<Card>& getHand();
 
