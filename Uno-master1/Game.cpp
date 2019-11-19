@@ -198,7 +198,7 @@ bool endOfGame = false;
         playerMove = Move(move, color, value, callout);
 
         if (playerMove.moveType() == "play") {
-          if(isInt(value)) {
+          if(isNumber(value)) {
             card = Card(stoi(value), color);
             cardExists = playCard(aPlayers.at(i), card);
           }
@@ -208,9 +208,9 @@ bool endOfGame = false;
           }
 
         } else if (playerMove.moveType() == "draw") {
-          if (drawLimit < aRules.drawLimit()) {
+          if (drawLimit <= aRules.drawLimit()) {
             draw(aPlayers.at(i));
-            drawLimit++;
+            ++drawLimit;
             cardExists = false;
           } else {
             std::cout << "You have already drawn the maximum number of cards this round." << std::endl;
@@ -274,7 +274,7 @@ bool Game::playCard(Player& player, const Card& card) {
     }
   }
   else if(cardToRemove == player.getHand().end()) {
-    std::cout << "You can't play a " << card.getColor() << " " << card.getValue() << " because your aren't holding one." << std::endl;
+    std::cout << "You can't play a " << card.getColor() << " " << card.getValue() << " because you aren't holding one." << std::endl;
     return false;
   }
 
@@ -318,7 +318,7 @@ bool Game::unoCalledOn(std::string& playerName, Player& playerThatCalledUnoOnSom
       }
     }
     else{
-      std::cout << playerName << " is not in the game."<<std::endl;
+      std::cout << playerName << " is not in this game.\n";
       return false;
     }
 
@@ -349,7 +349,7 @@ void Game::leaderBoard(){
     aPlayers.at(i).setScore(score);
   }
   std::sort(aPlayers.begin(),aPlayers.end());
-  std::cout << aPlayers.at(0).getPlayerName() << " won the game" << std::endl;
+  std::cout << aPlayers.at(0).getPlayerName() << " won the game\n";
 
   std::cout<< "==== Leader Board ====" << std::endl;
   for (int i = 0 ; i < aPlayers.size(); i++){

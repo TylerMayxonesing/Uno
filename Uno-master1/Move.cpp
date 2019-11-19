@@ -20,7 +20,7 @@ std::string Move::moveType()const{
   if(shortFormInput(aPlayerMove,"skip")){
     return "skip";
   }
-  else if(shortFormInput(aPlayerMove,"play") && aCallout == " " && isInt(aValue)){
+  else if(shortFormInput(aPlayerMove,"play") && aCallout == " " && isNumber(aValue)){
    return "play";
   }
 
