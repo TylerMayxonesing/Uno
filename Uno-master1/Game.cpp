@@ -63,27 +63,35 @@ void Game::playGame(std::string seed) {
   std::minstd_rand generator(stoi(seed));
   std::shuffle(aDeck.begin(), aDeck.end(), generator);
   }
-  for (int i = 0; i < aDeck.size(); i++) {
-    std::cout << aDeck.at(i).getColor() << " "
-              << aDeck.at(i).getValue()  << std::endl;
-  }
+//  for (int i = 0; i < aDeck.size(); i++) {
+//    std::cout << aDeck.at(i).getColor() << " "
+//              << aDeck.at(i).getValue()  << std::endl;
+//  }
   std::vector<Card> playerHand;
   std::vector<Card> discardedCards;
   Player player(" ", 0, playerHand);
-  int numPlayers;
-  std::string playerName;
   auto discard = DiscardPile(discardedCards);
 
+  int numPlayers;
+  std::string playerName;
   std::cout << "Enter the number of players in the game: ";
-  std::cin >> numPlayers;
-  for (int i = 0; i < numPlayers; i++) {
+  //std::cin >> numPlayers;
+  for (int i = 0; i < 3; i++) {
     std::cout << "Player " << i + 1 << " enter your name: ";
-    std::cin >> playerName;
+    std::getline(std::cin, playerName);
+    for(int j = 0; j < playerName.size(); j++){
+      if(isspace(playerName.at(j)))
+        return false;
+    }
     player = Player(playerName, 0, playerHand);
     aPlayers.push_back(player);
   }
   std::cout << "\n";
   std::cin.ignore();
+
+
+
+
 int j = 0;
 while(j  < aRules.startingHandSize()){
   for (int i = 0; i < aPlayers.size(); i++) {
@@ -100,11 +108,12 @@ while(j  < aRules.startingHandSize()){
 
 
   for (int i = 0; i < 1; i++) {
-    discardedCards.push_back(aDeck.at(i));
-    aDiscardPile.push_back(aDeck.at(i));
-    aDeck.erase(aDeck.begin(), aDeck.begin() + 1);
-    discard.setDiscardPile(discardedCards);
-    discardedCards.erase(discardedCards.begin(), discardedCards.begin() + 1);
+    discardedCards.push_back(aDeck.at(aDeck.size()-1));
+    aDiscardPile.push_back(aDeck.at(aDeck.size()-1));
+    aDeck.erase(aDeck.end() - 1, aDeck.end());
+    //discard.setDiscardPile(discardedCards);
+    //
+    // discardedCards.erase(discardedCards.begin(), discardedCards.begin() + 1);
     aDrawPile = aDeck;
   }
   bool cardExists;
@@ -133,7 +142,11 @@ bool endOfGame = false;
             for (int u = 0; u < aPlayers.at(x).getHand().size(); u++) {
 
               std::cout << aPlayers.at(x).getHand().at(u).getColor() << " "
-                        << aPlayers.at(x).getHand().at(u).getValue() << ", ";
+                        << aPlayers.at(x).getHand().at(u).getValue();
+              if(u < aPlayers.at(x).getHand().size()-1){
+                std::cout << ", ";
+              }
+
               if (u == aPlayers.at(x).getHand().size() - 1) {
                 std::cout << "\n";
               }
@@ -145,14 +158,16 @@ bool endOfGame = false;
                   << aDiscardPile.at(aDiscardPile.size() - 1).getValue() << std::endl;
         std::cout << "Your hand: ";
         for (int j = 0; j < aPlayers.at(i).getHand().size(); j++) {
-          std::cout << aPlayers.at(i).getHand().at(j).getColor() << " " << aPlayers.at(i).getHand().at(j).getValue()
-                    << ", ";
+          std::cout << aPlayers.at(i).getHand().at(j).getColor() << " " << aPlayers.at(i).getHand().at(j).getValue();
+          if(j < aPlayers.at(i).getHand().size()-1){
+            std::cout << ", ";
+          }
           if (j == aPlayers.at(i).getHand().size() - 1) {
             std::cout << "\n";
           }
         }
 
-          std::cout << aPlayers.at(i).getPlayerName() << ", enter your move, or h for help: ";
+          std::cout << aPlayers.at(i).getPlayerName() << ", enter your move or h for help: ";
           std::getline(std::cin, playerResponse);
           std::stringstream ss(playerResponse);
           while (ss >> move >> color >> value >> callout) {
@@ -194,6 +209,11 @@ bool endOfGame = false;
                          "- help" << std::endl;
             cardExists = false;
           }
+          else if(playerMove.moveType() == "quit"){
+            leaderBoard();
+            exit(0);
+
+          }
           else if (playerMove.moveType() == "unknown"){
             std::cout << "Unknown command entered." << std::endl;
             cardExists = false;
@@ -206,10 +226,8 @@ bool endOfGame = false;
 
   }
 
-  std::cout<< "==== Leader Board ====" << std::endl;
-  for (int i = 0 ; i < aPlayers.size(); i++){
-    std::cout << i <<".) " << aPlayers.at(i).getPlayerName()<<std::endl;
-  }
+  leaderBoard();
+
 }
 
 bool Game::playCard(Player& player, const Card& card) {
@@ -218,7 +236,7 @@ bool Game::playCard(Player& player, const Card& card) {
     if(cardToRemove != player.getHand().end()){
       if((*cardToRemove).canPlay(aDiscardPile.at(aDiscardPile.size() - 1))) {
         std::cout << player.getPlayerName() << " played " << (*cardToRemove).getColor() << " "
-                  << (*cardToRemove).getValue() << std::endl;
+                  << (*cardToRemove).getValue() << "." << std::endl;
         aDiscardPile.push_back(*cardToRemove);
         player.getHand().erase(cardToRemove);
         return true;
@@ -228,8 +246,8 @@ bool Game::playCard(Player& player, const Card& card) {
         return false;
       }
     }
-    else if(cardToRemove == player.getHand().end() && existingCard != allExistingCards.end()) {
-      std::cout << "You can't play a " << (*existingCard).getColor() << " " << (*existingCard).getValue() << " because your aren't holding one." << std::endl;
+    else if(cardToRemove == player.getHand().end()) {
+      std::cout << "You can't play a " << card.getColor() << " " << card.getValue() << " because your aren't holding one." << std::endl;
       return false;
     }
 
@@ -241,6 +259,7 @@ void Game::draw(Player& player) {
   }
   else{
   player.getHand().push_back(aDrawPile.at(aDrawPile.size()-1));
+  sort(player.getHand().begin(), player.getHand().end());
   }
 }
 
@@ -248,7 +267,7 @@ void Game::draw(Player& player) {
 
 bool Game::unoCalledOn(std::string& playerName, Player& playerThatCalledUnoOnSomeone){
   for (int i = 0; i < aPlayers.size(); i++) {
-    if (playerName == aPlayers.at(i).getPlayerName()) {
+    if (shortFormInput(playerName,aPlayers.at(i).getPlayerName())) {
 
 
       if (aPlayers.at(i).getHand().size() > 1) {
@@ -256,7 +275,6 @@ bool Game::unoCalledOn(std::string& playerName, Player& playerThatCalledUnoOnSom
                   << " because they have more than 1 card in their hand" << std::endl;
         for (int j = 0; j < aRules.badUnoCalloutPenalty(); j++) {
           draw(playerThatCalledUnoOnSomeone);
-          std::cout << "Hand values inside uno member: " << std::endl;
           for (int u = 0; u < playerThatCalledUnoOnSomeone.getHand().size(); u++) {
 
             std::cout << playerThatCalledUnoOnSomeone.getHand().at(u).getColor() << " "
@@ -272,6 +290,7 @@ bool Game::unoCalledOn(std::string& playerName, Player& playerThatCalledUnoOnSom
         return true;
       }
     }
+
   }
 }
 
@@ -286,5 +305,22 @@ bool Game::selfUnoCallout(Player& playerName) {
     }
     std::cout<< "You can't call UNO unless playing your second to last card." << std::endl;
     return false;
+  }
+}
+
+void Game::leaderBoard(){
+  for(int i = 0; i < aPlayers.size(); i++) {
+    int score = 0;
+    for(int j = 0; j < aPlayers.at(i).getHand().size(); j++){
+      score = score + aPlayers.at(i).getHand().at(j).getValue();
+    }
+    aPlayers.at(i).setScore(score);
+  }
+  std::sort(aPlayers.begin(),aPlayers.end());
+  std::cout << aPlayers.at(0).getPlayerName() << " won the game" << std::endl;
+
+  std::cout<< "==== Leader Board ====" << std::endl;
+  for (int i = 0 ; i < aPlayers.size(); i++){
+    std::cout << i <<".) " << aPlayers.at(i).getPlayerName()<< " : " << aPlayers.at(i).getScore() << std::endl;
   }
 }

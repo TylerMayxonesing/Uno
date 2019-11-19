@@ -43,6 +43,9 @@ bool Card::operator<(const Card& rhs) const{
   if((*this).getColor() < rhs.getColor()){
     return true;
   }
+  if((*this).getColor() == rhs.getColor() && (*this).getValue() < rhs.getValue()){
+    return true;
+  }
   else{
     return false;
   }

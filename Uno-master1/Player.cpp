@@ -14,7 +14,7 @@ std::string Player::getPlayerName(){
   return aPlayerName;
 }
 
-int Player::getScore(){
+int Player::getScore()const{
   return aScore;
 }
 
@@ -39,5 +39,14 @@ void Player::discardCardToDiscardPile(Card card){
   std::vector<Card>::iterator found = std::find(aPlayerHand.begin(), aPlayerHand.end(), card);
   if (found != aPlayerHand.end()){
     aPlayerHand.erase(found);
+  }
+}
+
+bool Player::operator<(const Player& player)const{
+  if((*this).getScore() < player.getScore()){
+    return true;
+  }
+  else{
+    return false;
   }
 }

@@ -35,7 +35,7 @@ std::string Move::moveType()const{
   }
 
   else if(shortFormInput(aPlayerMove,"quit") ){
-    exit(0);
+    return "quit";
   }
   else if(shortFormInput(aPlayerMove,"help")){
     return  "help";

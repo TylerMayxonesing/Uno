@@ -22,6 +22,8 @@
 #include "Move.h"
 #include "Rules.h"
 #include <exception>
+#include <ctype.h>
+#include <stdio.h>
 
 
 class Game{
@@ -46,6 +48,7 @@ class Game{
   bool endGame(std::vector<Card>&);
   Rules getRules();
   void leaderBoard();
+  void setUpPlayers();
 
 
 };

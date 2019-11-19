@@ -17,7 +17,7 @@ class Player:Hand{
   //~Player();
 
   std::string getPlayerName();
-  int getScore();
+  int getScore()const;
   std::vector<Card>& getHand();
 
 
@@ -27,6 +27,7 @@ class Player:Hand{
 
   std::string getPlayerMove();
   void setPlayerMove(std::string);
+  bool operator<(const Player&)const;
 
   void discardCardToDiscardPile(Card card);
 
